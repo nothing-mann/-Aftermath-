@@ -1,22 +1,53 @@
 #include "Entity.h"
 
+void Entity::initvariables()
+{
+	this->sprite = nullptr;
+	this->texture = nullptr;
+	this->movementComponent = nullptr;
+}
+
 Entity::Entity()
 {
+	this->initvariables();
 
-	this->movementSpeed = 100.f;
 }
 
 Entity::~Entity()
 {
 	delete this->sprite;
 }
+//Component functions
+void Entity::createSprite(sf::Texture* texture)
+{
+	this->texture = texture;
+	this->sprite = new sf::Sprite(*this->texture);
 
+}
+
+void Entity::createMovementComponent(const float maxVelocity)
+{
+	this->movementComponent = new MovementComponent(maxVelocity);
+}
+
+
+//Functions
+
+
+void Entity::setPosition(const float x, const float y)
+{
+	if (this->sprite)
+	{
+		this->sprite->setPosition(x,y);
+	}
+}
 
 void Entity::move(const float& dt, const float dir_x, const float dir_y)
 {
-	if (this->sprite)
+	if (this->sprite && this->movementComponent)
 	{ 
-		this->sprite->move(dir_x*this->movementSpeed*dt, dir_y*this->movementSpeed*dt);
+		this->movementComponent->move(dir_x, dir_y); //Sets velocity
+		this->sprite->move(this->movementComponent->getVelocity()*dt); // Uses velocity
 	}
 }
 
@@ -27,5 +58,8 @@ void Entity::update(const float& dt)
 
 void Entity::render(sf::RenderTarget* target)
 {
-	target->draw(this->shape);
+	if (this->sprite)
+	{
+		target->draw(*this->sprite);
+	}
 }
