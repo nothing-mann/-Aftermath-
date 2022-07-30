@@ -21,9 +21,10 @@ class Entity
 private:
 
 protected:
-	sf::RectangleShape shape;
-	float movementSpeed;
+	sf::Texture* texture; // We will not create individual for all the components because loading texture takes a lot of space and time too
+	sf::Sprite* sprite;
 
+	float movementSpeed;
 public:
 	Entity();
 	virtual ~Entity();

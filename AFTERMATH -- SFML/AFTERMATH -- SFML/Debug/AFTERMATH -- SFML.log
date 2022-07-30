@@ -1,2 +1,25 @@
 ﻿  Game.cpp
+  GameState.cpp
+  MainMenuState.cpp
+D:\Git\Project-3rd-sem-Aftermath-\AFTERMATH -- SFML\AFTERMATH -- SFML\MainMenuState.cpp(43,78): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+D:\Git\Project-3rd-sem-Aftermath-\AFTERMATH -- SFML\AFTERMATH -- SFML\MainMenuState.cpp(43,57): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
+  State.cpp
+  main.cpp
+  Generating Code...
   AFTERMATH -- SFML.vcxproj -> D:\Git\Project-3rd-sem-Aftermath-\AFTERMATH -- SFML\Debug\AFTERMATH -- SFML.exe

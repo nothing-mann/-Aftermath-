@@ -1,5 +1,6 @@
 #include "GameState.h"
 
+
 void GameState::initKeybinds()
 {
 	std::ifstream ifs("Config/gamestate_keybinds.ini");
@@ -16,8 +17,8 @@ void GameState::initKeybinds()
 	ifs.close();
 }
 
-GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys)
-	:State(window, supportedKeys)
+GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+	:State(window, supportedKeys, states)
 {
 	this->initKeybinds();
 }
@@ -27,14 +28,8 @@ GameState::~GameState()
 }
 
 
-void GameState::endState()
-{
-	std::cout << "Ending game state!" << "\n";
-}
-
 void GameState::updateInput(const float& dt)
 {
-	this->checkForQuit();
 
 	//Update Player input -- Movement
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_LEFT"))))
@@ -45,12 +40,16 @@ void GameState::updateInput(const float& dt)
 		this->player.move(dt, 0.f, -1.f);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
 		this->player.move(dt, 0.f, 1.f);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
+		this->endState();
 }
 
 void GameState::update(const float& dt)
 {
+	this->updateMousePositions();
 	this->updateInput(dt);
 	this->player.update(dt);
+
 }
 
 void GameState::render(sf::RenderTarget* target)
