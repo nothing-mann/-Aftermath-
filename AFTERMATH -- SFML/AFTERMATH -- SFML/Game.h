@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
-#include "GameState.h"
+
+#include "MainMenuState.h"
 
 class Game
 {
@@ -15,9 +16,13 @@ private:
 			  It resets itself after keeping track each time so lasts around some milliseconds.*/ 
 	std::stack<State*> states;
 
+	std::map<std::string, int > supportedKeys;
+
 	//Initialization
 	void initwindow();
+	void initkeys();
 	void initstates();
+	
 public:
 	//Constructor/Destructors
 	Game();

@@ -26,17 +26,44 @@ void Game::initwindow()
     this->window->setFramerateLimit(framerate_limit);
     this->window->setVerticalSyncEnabled(vertical_sync_enabled);
 }
+void Game::initkeys()
+{
+    std::ifstream ifs("Config/supported_keys.ini");
+    if (ifs.is_open())
+    {
+        std::string key = "";
+        int key_value = 0;
 
+        while (ifs >> key >> key_value)
+        {
+            this->supportedKeys[key] = key_value;
+        }
+    }
+    ifs.close();
+
+//Debug only. Can be removed later
+    for (auto i : this->supportedKeys)
+    {
+        std::cout << i.first << " " << i.second << "\n";
+    }
+
+}
 void Game::initstates()
 {
-    this->states.push(new GameState(this->window));
+    this->states.push(new MainMenuState(this->window, &this->supportedKeys));
+    this->states.push(new GameState(this->window, &this->supportedKeys));
 }
+
+
 
 //Constructors and destructors
 Game::Game()
 {
+    //All the initializations should be declared here too
     this->initwindow();
+    this->initkeys();
     this->initstates();
+    
 }
 
 Game::~Game()
