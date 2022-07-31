@@ -1,5 +1,6 @@
 #pragma once
 #include "GameState.h"
+#include "EditorState.h"
 #include "Button.h"
 
 class MainMenuState :
@@ -31,7 +32,7 @@ public:
     void updateInput(const float& dt);
     void updateButtons();
     void update(const float& dt);
-    void renderButtons(sf::RenderTarget* tarrget = nullptr);
+    void renderButtons(sf::RenderTarget& target);
     void render(sf::RenderTarget* target = nullptr);
 };
 

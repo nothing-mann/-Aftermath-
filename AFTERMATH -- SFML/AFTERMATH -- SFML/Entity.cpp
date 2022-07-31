@@ -5,6 +5,8 @@ void Entity::initvariables()
 
 	this->texture = nullptr;
 	this->movementComponent = nullptr;
+	this->animationComponent = nullptr;
+	this->hitboxComponent = nullptr;
 }
 
 Entity::Entity()
@@ -17,6 +19,11 @@ Entity::~Entity()
 {
 	delete this->movementComponent;
 	delete this->animationComponent;
+	delete this->hitboxComponent;
+}
+void Entity::createHitboxComponent(sf::Sprite& sprite, const float offset_x, const float offset_y, float width, float height)
+{
+	this->hitboxComponent = new HitboxComponent(sprite, offset_x, offset_y, width, height);
 }
 //Component functions
 void Entity::setTexture(sf::Texture& texture)
@@ -59,7 +66,9 @@ void Entity::update(const float& dt)
 
 }
 
-void Entity::render(sf::RenderTarget* target)
+void Entity::render(sf::RenderTarget& target)
 {
-		target->draw(this->sprite);
+		target.draw(this->sprite);
+		if (this->hitboxComponent)
+			this->hitboxComponent->render(target);
 }

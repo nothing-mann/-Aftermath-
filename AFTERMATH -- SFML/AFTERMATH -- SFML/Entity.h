@@ -1,5 +1,6 @@
 #pragma once
 
+#include "HitboxComponent.h"
 #include "MovementComponent.h"
 #include "AnimationComponent.h"
 
@@ -13,6 +14,7 @@ protected:
 	sf::Texture* texture; // We will not create individual for all the components because loading texture takes a lot of space and time too
 	sf::Sprite sprite;
 
+	HitboxComponent* hitboxComponent;
 	MovementComponent* movementComponent;
 	AnimationComponent* animationComponent;
 public:
@@ -20,6 +22,7 @@ public:
 	virtual ~Entity();
 
 	//Component functions
+	void createHitboxComponent(sf::Sprite& sprite, const float offset_x, const float offset_y, float width, float height);
 	void setTexture(sf::Texture& texture);
 	void createMovementComponent(const float maxVelocity, float acceleration, float deceleration);
 	void createAnimationComponent(sf::Texture& texture_sheet);
@@ -28,6 +31,6 @@ public:
 	virtual void setPosition(const float x, const float y);
 	virtual void move(const float dir_x, const float dir_y, const float& dt);
 	virtual void update(const float& dt);
-	virtual void render(sf::RenderTarget* target) ;
+	virtual void render(sf::RenderTarget& target) ;
 };
 

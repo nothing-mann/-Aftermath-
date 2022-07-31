@@ -10,9 +10,52 @@ MovementComponent::~MovementComponent()
 {
 }
 
+
+//Accessors
+const float& MovementComponent::getMaxVelocity() const
+{
+	return this->maxVelocity;
+}
+
 const sf::Vector2f& MovementComponent::getVelocity() const
 {
 	return this->velocity;
+}
+
+
+//FOR ANIMATION OF SPRITES
+
+const bool MovementComponent::getState(const short unsigned state) const
+{
+	switch (state)
+	{
+	case IDLE:
+		if (this->velocity.x == 0.f && this->velocity.y == 0.f)
+			return true;
+		break;
+	case MOVING:
+		if (this->velocity.x != 0.f || this->velocity.y != 0.f)
+			return true;
+		break;
+	case MOVING_LEFT:
+		if (this->velocity.x < 0.f)
+			return true;
+		break;
+	case MOVING_RIGHT:
+		if (this->velocity.x > 0.f)
+			return true;
+		break;
+	case MOVING_UP:
+		if (this->velocity.y < 0.f)
+			return true;
+		break;
+	case MOVING_DOWN:
+		if (this->velocity.y > 0.f)
+			return true;
+		break;
+
+	}
+	return false;
 }
 
 

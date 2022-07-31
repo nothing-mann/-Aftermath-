@@ -45,7 +45,8 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
-	this->buttons["GAME_STATE"] = new Button(710,400, 500, 100, &this->font, "NEW GAME", 40, sf::Color(255,255,255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 200), sf::Color(184, 134, 11, 255), sf::Color(218, 165, 32, 255), sf::Color(184, 134, 11, 200));
+	this->buttons["GAME_STATE"] = new Button(710,250, 500, 100, &this->font, "NEW GAME", 40, sf::Color(255,255,255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 200), sf::Color(184, 134, 11, 255), sf::Color(218, 165, 32, 255), sf::Color(184, 134, 11, 200));
+	this->buttons["EDITOR_STATE"] = new Button(710, 500, 500, 100, &this->font, "EDITOR STATE", 40, sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 200), sf::Color(184, 134, 11, 255), sf::Color(218, 165, 32, 255), sf::Color(184, 134, 11, 200));
 	this->buttons["SETTINGS"] = new Button(710, 650, 500, 100, &this->font, "SETTINGS",32, sf::Color(255, 255, 255, 230), sf::Color(255, 255, 255, 230), sf::Color(255, 255, 255, 200), sf::Color(184, 134, 11, 230), sf::Color(218, 165, 32, 230), sf::Color(184, 134, 11, 200));
 	this->buttons["EXIT_STATE"] = new Button(710,800, 500, 100, &this->font, "QUIT",24, sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 200), sf::Color(70, 70, 70, 230), sf::Color(150, 150, 150, 230), sf::Color(20, 20, 20, 200));
 
@@ -95,6 +96,13 @@ void MainMenuState::updateButtons()
 	{
 		this->states->push(new GameState(this->window, this->supportedKeys, this->states));
 	}
+	//Settings
+
+	//Editor
+	if (this->buttons["EDITOR_STATE"]->isPressed())
+	{
+		this->states->push(new EditorState(this->window, this->supportedKeys, this->states));
+	}
 
 	//Quit the game
 	if (this->buttons["EXIT_STATE"]->isPressed())
@@ -115,7 +123,7 @@ void MainMenuState::update(const float& dt)
 	
 }
 
-void MainMenuState::renderButtons(sf::RenderTarget* target)
+void MainMenuState::renderButtons(sf::RenderTarget& target)
 {
 	//this->gamestate_btn->render(target);
 	for (auto& it : this->buttons)
@@ -129,7 +137,7 @@ void MainMenuState::render(sf::RenderTarget* target)
 	if (!target)
 		target = this->window;
 	target->draw(this->background);
-	this->renderButtons(target);
+	this->renderButtons(*target);
 	
 	//Remove Later -- Used for mouse position 
 	sf::Text mouseText;

@@ -20,7 +20,7 @@ void GameState::initKeybinds()
 void GameState::initTextures()
 {
 
-	this->textures["PLAYER_IDLE"].loadFromFile("Resources/Images/Sprites/Player/test.png");
+	this->textures["PLAYER_IDLE"].loadFromFile("Resources/Images/Sprites/Player/Biker.png");
 }
 
 void GameState::initPlayers()
@@ -70,5 +70,5 @@ void GameState::render(sf::RenderTarget* target)
 {
 	if (!target)
 		target = this->window;
-	this->player->render(target);
+	this->player->render(*target);
 }
