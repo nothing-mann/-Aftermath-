@@ -1,7 +1,7 @@
-﻿  Player.cpp
+﻿  SettingsState.cpp
   Generating code
-  1 of 817 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+  10 of 853 functions ( 1.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    1 functions had inline decision re-evaluated but remain unchanged
+    3 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   AFTERMATH -- SFML.vcxproj -> D:\Git\Project-3rd-sem-Aftermath-\AFTERMATH -- SFML\Release\AFTERMATH -- SFML.exe
