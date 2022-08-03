@@ -134,7 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimationComponent.cpp" />
-    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="gui.cpp" />
     <ClCompile Include="EditorState.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -150,7 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimationComponent.h" />
-    <ClInclude Include="Button.h" />
+    <ClInclude Include="gui.h" />
     <ClInclude Include="EditorState.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
