@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "EditorState.h"
 
 //Initializer functions
@@ -35,6 +36,14 @@ void EditorState::initKeybinds()
 	ifs.close();
 }
 
+void EditorState::initPauseMenu()
+{
+	this->pmenu = new PauseMenu(*this->window, this->font);
+
+	this->pmenu->addButton("QUIT", 800.f, "Quit");
+}
+
+
 void EditorState::initButtons()
 {
 
@@ -47,6 +56,7 @@ EditorState::EditorState(sf::RenderWindow* window, std::map<std::string, int>* s
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
+	this->initPauseMenu();
 	this->initButtons();
 
 
@@ -59,6 +69,7 @@ EditorState::~EditorState()
 	{
 		delete it->second;
 	}
+	delete this->pmenu;
 }
 
 
@@ -66,10 +77,13 @@ EditorState::~EditorState()
 
 void EditorState::updateInput(const float& dt)
 {
-
-	//if(sf::Keyboard::isKeyPressed(sf::Keyboard::G))
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))))
-		this->endState();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("CLOSE"))) && this->getKeytime())
+	{
+		if (!this->paused)
+			this->pauseState();
+		else
+			this->unpausedState();
+	}
 
 }
 
@@ -84,15 +98,33 @@ void EditorState::updateButtons()
 	
 }
 
+void EditorState::updatePauseMenuButtons()
+{
+	if (this->pmenu->isButtonPressed("QUIT"))
+		//if(sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+		this->endState();
+}
+
 void EditorState::update(const float& dt)
 {
 	this->updateMousePositions();
+	this->updateKeytime(dt);
 	this->updateInput(dt);
+
+	if (!this->paused) //Unpaused
+	{
+		this->updateButtons();
+	}
+	else //Paused
+	{
+		this->pmenu->update(this->mousePosView);
+		this->updatePauseMenuButtons();
+	}
 
 	system("cls");
 	std::cout << this->mousePosView.x << " " << this->mousePosView.y << "\n";
 
-	this->updateButtons();
+	
 
 }
 
@@ -111,6 +143,13 @@ void EditorState::render(sf::RenderTarget* target)
 		target = this->window;
 
 	this->renderButtons(*target);
+	
+	this->map.render(*target);
+
+	if (this->paused) //Paused menu render
+	{
+		this->pmenu->render(*target);
+	}
 
 	//Remove Later -- Used for mouse position 
 	sf::Text mouseText;

@@ -1,13 +1,4 @@
 #pragma once
-#include <iostream>
-#include <string>
-#include<map>
-
-#include "SFML\System.hpp"
-#include "SFML\Window.hpp"
-#include "SFML\Graphics.hpp"
-#include "SFML\Audio.hpp"
-#include "SFML\Network.hpp"
 
 class AnimationComponent
 {

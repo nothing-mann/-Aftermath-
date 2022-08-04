@@ -1,9 +1,11 @@
+#include "stdafx.h"
 #include "SettingsState.h"
 
 
 //Initializer functions
 void SettingsState::initVariables()
 {
+	this->modes = sf::VideoMode::getFullscreenModes();
 }
 
 void SettingsState::initBackground()
@@ -50,20 +52,39 @@ void SettingsState::initGui()
 	this->buttons["BACK"] = new gui::Button(1400, 900, 500, 100, &this->font, "BACK", 24, sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 200), sf::Color(70, 70, 70, 230), sf::Color(150, 150, 150, 230), sf::Color(20, 20, 20, 200));
 	this->buttons["APPLY"] = new gui::Button(1400, 800, 500, 100, &this->font, "APPLY", 24, sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 200), sf::Color(184, 134, 11, 230), sf::Color(218, 165, 32, 230), sf::Color(184, 134, 11, 200));
 
-	std::string li[] = { "1920x1080", "800x600", "640x480" };
-	this->dropDownLists["RESOLUTION"] = new gui::DropDownBox(800, 450, 200, 50, font, li, 3);
+	std::vector<std::string> modes_str;
+	for (auto& i : this->modes)
+	{
+		modes_str.push_back(std::to_string(i.width) + 'x' + std::to_string(i.height));
+	}
+
+	
+	this->dropDownLists["RESOLUTION"] = new gui::DropDownBox(800, 450, 200, 50, font, modes_str.data(), modes_str.size());
+}
+
+void SettingsState::initText()
+{
+	this->optionsText.setFont(this->font);
+
+	this->optionsText.setPosition(sf::Vector2f(600.f, 450.f));
+
+	this->optionsText.setCharacterSize(30);
+	this->optionsText.setFillColor(sf::Color(255, 255, 255, 200));
+
+	this->optionsText.setString("Resolution \n\nFullscreen \nAntialiasing \nVsync");
 }
 
 
 
-SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	:State(window, supportedKeys, states)
+SettingsState::SettingsState(sf::RenderWindow* window, GraphicsSettings& gfxSettings, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+	:State(window, supportedKeys, states), gfxSettings(gfxSettings)
 {
 	this->initVariables();
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
 	this->initGui();
+	this->initText();
 }
 
 SettingsState::~SettingsState()
@@ -114,7 +135,9 @@ void SettingsState::updateGui(const float& dt)
 	//Apply selected settings
 	if (this->buttons["APPLY"]->isPressed())
 	{
-		
+		//Remove later
+		this->gfxSettings.resolution = this->modes[this->dropDownLists["RESOLUTION"]->getActiveElementId()];
+		this->window->create(this->gfxSettings.resolution,this->gfxSettings.title, sf::Style::Default);
 	}
 	//Dropdown lists
 	for (auto& it : this->dropDownLists)
@@ -158,7 +181,7 @@ void SettingsState::render(sf::RenderTarget* target)
 	target->draw(this->background);
 	this->renderGui(*target);
 
-
+	target->draw(this->optionsText);
 	//Remove Later -- Used for mouse position 
 	sf::Text mouseText;
 	mouseText.setPosition(this->mousePosView.x, this->mousePosView.y - 50);
