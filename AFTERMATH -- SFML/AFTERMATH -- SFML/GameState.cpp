@@ -43,8 +43,13 @@ void GameState::initPlayers()
 	this->player = new Player(0, 0, this->textures["PLAYER_IDLE"]);
 }
 
-GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	:State(window, supportedKeys, states)
+void GameState::initTileMap()
+{
+	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10);
+}
+
+GameState::GameState(StateData* state_data)
+	:State(state_data)
 {
 	this->initKeybinds();
 	this->initFonts();
@@ -52,12 +57,14 @@ GameState::GameState(sf::RenderWindow* window, std::map<std::string, int>* suppo
 	
 	this->initPauseMenu();
 	this->initPlayers();
+	this->initTileMap();
 }
 
 GameState::~GameState()
 {
 	delete this->player;
 	delete this->pmenu;
+	delete this->tileMap;
 }
 
 
