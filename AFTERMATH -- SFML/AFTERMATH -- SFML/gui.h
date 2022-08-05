@@ -27,7 +27,7 @@ namespace gui
 		sf::Color outlineHoverColor;
 		sf::Color outlineActiveColor;
 	public:
-		Button(float x, float y, float width, float height, sf::Font* font, std::string text, unsigned character_size, sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color, sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor, sf::Color outline_idle_color = sf::Color::Transparent, sf::Color outline_hover_color = sf::Color::Transparent, sf::Color outline_active_color = sf::Color::Transparent,  short unsigned id = 0);
+		Button(float x, float y, float width, float height, sf::Font* font, std::string text, unsigned character_size, sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color, sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor, sf::Color outline_idle_color = sf::Color::Transparent, sf::Color outline_hover_color = sf::Color::Transparent, sf::Color outline_active_color = sf::Color::Transparent, short unsigned id = 0);
 		~Button();
 		//Accessors
 		const bool isPressed() const;
@@ -67,4 +67,34 @@ namespace gui
 		void update(const sf::Vector2f& mousePos, const float& dt);
 		void render(sf::RenderTarget& target);
 	};
+
+
+	class TextureSelector
+	{
+	private:
+		float gridSize;
+		bool active;
+		bool hidden;
+		gui::Button* hide_btn;
+		sf::RectangleShape bounds;
+		sf::Sprite sheet;
+		sf::RectangleShape selector;
+		sf::Vector2u mousePosGrid;
+		sf::IntRect textureRect;
+		
+		
+
+	public:
+		TextureSelector(float x, float y, float width, float height, float gridSize, const sf::Texture* texture_sheet, sf::Font& font, std::string text);
+		~TextureSelector();
+
+		//Accessors
+		const bool& getActive() const;
+		const sf::IntRect& getTextureRect() const;
+
+		//Function
+		void update(const sf::Vector2i& mousePosWindow);
+		void render(sf::RenderTarget& target);
+	};
+
 }

@@ -16,9 +16,11 @@ private:
     std::map<std::string, gui::Button*>buttons;
 
     TileMap* tileMap;
+    
     sf::IntRect textureRect;
-
     sf::RectangleShape selectorRect;
+
+    gui::TextureSelector* textureSelector;
 
     //Functions
     void initVariables();
