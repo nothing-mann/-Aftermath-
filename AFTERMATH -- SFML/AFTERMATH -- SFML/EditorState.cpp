@@ -5,6 +5,8 @@
 void EditorState::initVariables()
 {
 	this->textureRect = sf::IntRect(0, 0, static_cast<int>(this->stateData->gridSize), static_cast<int>(this->stateData->gridSize));
+	this->collision = false;
+	this->type = TileTypes::DEFAULT;
 }
 
 void EditorState::initBackground()
@@ -52,12 +54,13 @@ void EditorState::initPauseMenu()
 
 	this->pmenu->addButton("QUIT", 800.f, "Quit");
 	this->pmenu->addButton("SAVE", 500.f, "Save");
+	this->pmenu->addButton("LOAD", 400.f, "Load");
 }
 
 
 void EditorState::initButtons()
 {
-
+	//sf::Keyboard::Key
 }
 
 void EditorState::initGui()
@@ -133,7 +136,7 @@ void EditorState::updateEditorInput(const float& dt)
 		{
 			if (!this->textureSelector->getActive())
 			{
-				this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+				this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect, this->collision, this->type);
 			}
 			else
 			{
@@ -152,6 +155,24 @@ void EditorState::updateEditorInput(const float& dt)
 		}
 	}
 
+	//Toggle Collision
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("TOGGLE_COLLISION"))) && this->getKeytime())
+	{
+		if (this->collision)
+			this->collision = false;
+		else
+			this->collision = true;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("INCREASE_TYPE"))) && this->getKeytime())
+	{
+		//Change to limit to MAX type!!!
+		++this->type;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("DECREASE_TYPE"))) && this->getKeytime())
+	{
+		if(this->type > 0)
+			--this->type;
+	}
 }
 
 void EditorState::updateButtons()
@@ -177,7 +198,7 @@ void EditorState::updateGui(const float& dt)
 	
 	this->cursorText.setPosition(this->mousePosView.x + 100.f, this->mousePosView.y - 50.f);
 	std::stringstream ss;
-	ss << this->mousePosView.x << " " << this->mousePosView.y << "\n" << this->mousePosGrid.x << " " << this->mousePosGrid.y << "\n" << this->textureRect.left << " " << this->textureRect.top;
+	ss << this->mousePosView.x << " " << this->mousePosView.y << "\n" << this->mousePosGrid.x << " " << this->mousePosGrid.y << "\n" << this->textureRect.left << " " << this->textureRect.top << "\nColliaion: " << this->collision << "\n" << "Type: " << this->type;
 	this->cursorText.setString(ss.str());
 	
 
@@ -188,9 +209,12 @@ void EditorState::updatePauseMenuButtons()
 	if (this->pmenu->isButtonPressed("QUIT"))
 		//if(sf::Keyboard::isKeyPressed(sf::Keyboard::G))
 		this->endState();
-	if (this->pmenu->isButtonPressed("QUIT"))
+	if (this->pmenu->isButtonPressed("SAVE"))
 		//if(sf::Keyboard::isKeyPressed(sf::Keyboard::G))
 		this->tileMap->saveToFile("text.ammp");
+	if (this->pmenu->isButtonPressed("LOAD"))
+		//if(sf::Keyboard::isKeyPressed(sf::Keyboard::G))
+		this->tileMap->loadFromFile("text.ammp");
 }
 
 void EditorState::update(const float& dt)

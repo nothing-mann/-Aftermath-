@@ -11,7 +11,7 @@ protected:
 	short type;
 public:
 	Tile();
-	Tile(float x, float y, float gridSizef, sf::Texture& texture, const sf::IntRect& tex_rect, bool collision = false, short type = TileTypes::DEFAULT);
+	Tile(unsigned grid_x, unsigned grid_y, float gridSizef, sf::Texture& texture, const sf::IntRect& tex_rect, bool collision = false, short type = TileTypes::DEFAULT);
 	virtual ~Tile();
 	//Functions
 	const std::string getAsString() const;
