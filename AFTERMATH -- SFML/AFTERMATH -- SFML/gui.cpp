@@ -235,6 +235,7 @@ void gui::DropDownBox::render(sf::RenderTarget& target)
 //Texture Selector ============================================================
 
 gui::TextureSelector::TextureSelector(float x, float y, float width, float height, float gridSize, const sf::Texture* texture_sheet, sf::Font& font, std::string text)
+	:keytimeMax(1.f), keytime(0.f)
 {
 	this->gridSize = gridSize;
 
@@ -288,11 +289,29 @@ const sf::IntRect& gui::TextureSelector::getTextureRect() const
 	return this->textureRect;
 }
 
-void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow)
+const bool gui::TextureSelector::getKeytime()
 {
+	if (this->keytime >= this->keytimeMax)
+	{
+		this->keytime = 0.f;
+		return true;
+	}
+	return false;
+}
+
+//Functions
+void gui::TextureSelector::updateKeytime(const float& dt)
+{
+	if (this->keytime < this->keytimeMax)
+		this->keytime += 10.f * dt;
+}
+
+void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow, const float& dt)
+{
+	this->updateKeytime(dt);
 	this->hide_btn->update(static_cast<sf::Vector2f>(mousePosWindow));
 	
-	if (this->hide_btn->isPressed())
+	if (this->hide_btn->isPressed() && this->getKeytime())
 	{
 		if (this->hidden)
 			this->hidden = false;

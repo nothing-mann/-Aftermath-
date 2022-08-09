@@ -72,6 +72,8 @@ namespace gui
 	class TextureSelector
 	{
 	private:
+		float keytime;
+		const float keytimeMax;
 		float gridSize;
 		bool active;
 		bool hidden;
@@ -81,7 +83,7 @@ namespace gui
 		sf::RectangleShape selector;
 		sf::Vector2u mousePosGrid;
 		sf::IntRect textureRect;
-		
+
 		
 
 	public:
@@ -93,7 +95,9 @@ namespace gui
 		const sf::IntRect& getTextureRect() const;
 
 		//Function
-		void update(const sf::Vector2i& mousePosWindow);
+		const bool getKeytime();
+		void updateKeytime(const float& dt);
+		void update(const sf::Vector2i& mousePosWindow, const float& dt);
 		void render(sf::RenderTarget& target);
 	};
 
