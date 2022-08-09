@@ -173,6 +173,7 @@
     <ClInclude Include="SettingsState.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="stdafxc.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMap.h" />
   </ItemGroup>

@@ -54,11 +54,11 @@ void PauseMenu::addButton(const std::string key,  float y, const std::string tex
 	this->buttons[key] = new gui::Button(x, y, width, height, &this->font, text , 36, sf::Color(70, 70, 70, 200), sf::Color(250, 250, 250, 250), sf::Color(20, 20, 20, 50), sf::Color(70, 70, 70, 0), sf::Color(150, 150, 150, 0), sf::Color(20, 20, 20, 0));
 }
 
-void PauseMenu::update(const sf::Vector2f& mousePos)
+void PauseMenu::update(const sf::Vector2i& mousePosWindow)
 {
 	for (auto& i : this->buttons)
 	{
-		i.second->update(mousePos);
+		i.second->update(mousePosWindow);
 	}
 }
 

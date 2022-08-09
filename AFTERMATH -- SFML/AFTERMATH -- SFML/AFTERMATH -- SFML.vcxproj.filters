@@ -134,11 +134,14 @@
     <ClInclude Include="TileMap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="stdafx.h">
+    <ClInclude Include="stdafxc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GraphicsSettings.h">
       <Filter>Resource Files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
