@@ -16,6 +16,7 @@ public:
 	GraphicsSettings* gfxSettings;
 	std::map < std::string, int >* supportedKeys; 
 	std::stack<State*>* states;
+	
 
 };
 //Resources are included here like players,
