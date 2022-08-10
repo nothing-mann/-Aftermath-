@@ -48,18 +48,28 @@ AttributeComponent* Player::getAttributeComponent()
 //Functions
 void Player::loseHP(const int hp)
 {
+	this->attributeComponent->hp -= hp;
+	if (this->attributeComponent->hp < 0)
+		this->attributeComponent->hp = 0;
 }
 
 void Player::gainHP(const int hp)
 {
+	this->attributeComponent->hp += hp;
+	if (this->attributeComponent->hp > this->attributeComponent->hpMax)
+		this->attributeComponent->hp = this->attributeComponent->hpMax;
 }
 
 void Player::loseEXP(const int exp)
 {
+	this->attributeComponent->exp -= exp;
+	if (this->attributeComponent->exp < 0)
+		this->attributeComponent->exp = 0;
 }
 
 void Player::gainEXP(const int exp)
 {
+	this->attributeComponent->gainExp(exp);
 }
 
 

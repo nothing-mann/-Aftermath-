@@ -9,7 +9,7 @@ void TileMap::clear()
 		{
 			for (int z = 0; z < this->layers; z++)
 			{
-				for (int k = 0; k < this->map[x][y][z].size(); k++)
+				for (int k = 0; k < static_cast<int>(this->map[x][y][z].size()); k++)
 				{
 					delete this->map[x][y][z][k];
 					this->map[x][y][z][k] = NULL;
@@ -80,11 +80,11 @@ const sf::Texture* TileMap::getTileSheet() const
 
 const int TileMap::getLayerSize(const int x, const int y, const int layer) const
 {
-	if (x >= 0 && x < this->map.size())
+	if (x >= 0 && x < static_cast<int>(this->map.size()))
 	{
-		if (y >= 0 && y < this->map[x].size())
+		if (y >= 0 && y < static_cast<int>(this->map[x].size()))
 		{
-			if (layer >= 0 && layer < this->map[x][y].size())
+			if (layer >= 0 && layer < static_cast<int>(this->map[x][y].size()))
 			{
 				return this->map[x][y][layer].size();
 			}
@@ -152,7 +152,7 @@ void TileMap::saveToFile(const std::string file_name)
 					
 					if (!this->map[x][y][z].empty())
 					{
-						for (int k = 0; k < this->map[x][y][z].size(); k++)
+						for (int k = 0; k < static_cast<int>(this->map[x][y][z].size()); k++)
 						{
 							out_file << x << " " << y << " " << z << " " << this->map[x][y][z][k]->getAsString() << " "; //MAKE SURE THE LAST SPACE IS NOT SAVED
 						}
@@ -294,7 +294,7 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
 
 		for (int y = this->fromY; y < this->toY; y++)
 		{
-			for (int k = 0; k < this->map[x][y][this->layer].size(); k++)
+			for (int k = 0; k < static_cast<int>(this->map[x][y][this->layer].size()); k++)
 			{
 				sf::FloatRect playerBounds = entity->getGlobalBounds();
 				sf::FloatRect wallBounds = this->map[x][y][this->layer][k]->getGlobalBounds();
@@ -389,7 +389,7 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 	{
 		for (int y = this->fromY; y < this->toY; y++)
 		{
-			for (int k = 0; k < this->map[x][y][this->layer].size(); k++)
+			for (int k = 0; k < static_cast<int>(this->map[x][y][this->layer].size()); k++)
 			{
 				if (this->map[x][y][this->layer][k]->getType() == TileTypes::DOODAD)
 				{
