@@ -5,7 +5,7 @@ class Player :
 {
 private:
     //Variables
-    bool attacking;
+    bool jumping; //Convert the jumping into attacking once it is done
 
     //Initializer functions
     void initVariables();
@@ -15,7 +15,7 @@ public:
     virtual ~Player();
 
     //Functions
-    void updateAttack();
+    void updateJump();
     void updateAnimation(const float& dt);
     void update(const float& dt);
     void render(sf::RenderTarget& target);

@@ -3,6 +3,7 @@
 //Initializer functions
 void Player::initVariables()
 {
+	this->jumping = false;
 }
 
 void Player::initComponents()
@@ -34,22 +35,67 @@ Player::~Player()
 }
 
 
+
+
 //Functions
-void Player::update(const float& dt)
+void Player::updateJump() //Change it to attack once it is done
 {
-	this->movementComponent->update(dt);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+		this->jumping = true;
+
+	}
+}
+
+void Player::updateAnimation(const float& dt)
+{
+	if (this->jumping)
+	{
+		//Set origin depending on direction
+		if (this->sprite.getScale().x > 0.f) //Facing right
+		{
+			this->sprite.setOrigin(0.f, -4.f);
+		}
+		else //Facing left
+		{
+			this->sprite.setOrigin(30.f, -4.f);
+		}
+		//Animate and check for animation and
+		if (this->animationComponent->play("JUMP", dt, true)) //When attacking feature is added set the priority animation true to the attack animation
+		{
+			this->jumping = false;
+
+			if (this->sprite.getScale().x > 0.f) //Facing right
+			{
+				this->sprite.setOrigin(0.f, 0.f);
+			}
+			else //Facing left
+			{
+				this->sprite.setOrigin(30.f, 0.f);
+			}
+		}
+		//if (this->animationComponent->isDone("JUMP"))
+
+	}
 	if (this->movementComponent->getState(IDLE))
 		this->animationComponent->play("IDLE", dt);
 	else if (this->movementComponent->getState(MOVING_RIGHT))
 	{
-		this->sprite.setOrigin(0.f, 0.f);
-		this->sprite.setScale(1.f, 1.f);
+		if (this->sprite.getScale().x < 0.f)
+		{
+			this->sprite.setOrigin(0.f, 0.f);
+			this->sprite.setScale(1.f, 1.f);
+		}
 		this->animationComponent->play("RUN", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
 	{
-		this->sprite.setOrigin(30.f, 0.f);
-		this->sprite.setScale(-1.f, 1.f);
+		if (this->sprite.getScale().x > 0.f)
+		{
+			this->sprite.setOrigin(30.f, 0.f);
+			this->sprite.setScale(-1.f, 1.f);
+		}
+
 		this->animationComponent->play("RUN", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_UP))
@@ -60,6 +106,15 @@ void Player::update(const float& dt)
 	{
 		this->animationComponent->play("RUN", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
+}
+void Player::update(const float& dt)
+{
+	this->movementComponent->update(dt);
+
+	this->updateJump();
+
+	this->updateAnimation(dt);
+
 	this->hitboxComponent->update();
 }
 
