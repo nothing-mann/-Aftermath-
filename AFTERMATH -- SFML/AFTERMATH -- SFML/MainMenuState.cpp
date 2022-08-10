@@ -46,10 +46,11 @@ void MainMenuState::initKeybinds()
 
 void MainMenuState::initButtons()
 {
-	this->buttons["GAME_STATE"] = new gui::Button(710,250, 500, 100, &this->font, "NEW GAME", 40, sf::Color(255,255,255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 200), sf::Color(184, 134, 11, 255), sf::Color(218, 165, 32, 255), sf::Color(184, 134, 11, 200));
-	this->buttons["EDITOR_STATE"] = new gui::Button(710, 500, 500, 100, &this->font, "EDITOR STATE", 40, sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 200), sf::Color(184, 134, 11, 255), sf::Color(218, 165, 32, 255), sf::Color(184, 134, 11, 200));
-	this->buttons["SETTINGS_STATE"] = new gui::Button(710, 650, 500, 100, &this->font, "SETTINGS",32, sf::Color(255, 255, 255, 230), sf::Color(255, 255, 255, 230), sf::Color(255, 255, 255, 200), sf::Color(184, 134, 11, 230), sf::Color(218, 165, 32, 230), sf::Color(184, 134, 11, 200));
-	this->buttons["EXIT_STATE"] = new gui::Button(710,900, 500, 100, &this->font, "QUIT",24, sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 200), sf::Color(70, 70, 70, 230), sf::Color(150, 150, 150, 230), sf::Color(20, 20, 20, 200));
+	const sf::VideoMode& vm = this->stateData->gfxSettings->resolution;
+	this->buttons["GAME_STATE"] = new gui::Button(gui::p2pX(36.97f, vm), gui::p2pY(23.14f, vm), gui::p2pX(26.04f, vm), gui::p2pY(9.25f, vm), &this->font, "NEW GAME", gui::calcCharSize(vm), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 200), sf::Color(184, 134, 11, 255), sf::Color(218, 165, 32, 255), sf::Color(184, 134, 11, 200));
+	this->buttons["EDITOR_STATE"] = new gui::Button(gui::p2pX(36.97f, vm), gui::p2pY(46.29f, vm), gui::p2pX(26.04f, vm), gui::p2pY(9.25f, vm), &this->font, "EDITOR STATE", gui::calcCharSize(vm), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 200), sf::Color(184, 134, 11, 255), sf::Color(218, 165, 32, 255), sf::Color(184, 134, 11, 200));
+	this->buttons["SETTINGS_STATE"] = new gui::Button(gui::p2pX(36.97f, vm), gui::p2pY(60.18f, vm), gui::p2pX(26.04f, vm), gui::p2pY(9.25f, vm), &this->font, "SETTINGS", gui::calcCharSize(vm), sf::Color(255, 255, 255, 230), sf::Color(255, 255, 255, 230), sf::Color(255, 255, 255, 200), sf::Color(184, 134, 11, 230), sf::Color(218, 165, 32, 230), sf::Color(184, 134, 11, 200));
+	this->buttons["EXIT_STATE"] = new gui::Button(gui::p2pX(36.97f, vm), gui::p2pY(83.33f, vm), gui::p2pX(26.04f, vm), gui::p2pY(9.25f, vm), &this->font, "QUIT", gui::calcCharSize(vm), sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 200), sf::Color(70, 70, 70, 230), sf::Color(150, 150, 150, 230), sf::Color(20, 20, 20, 200));
 
 }
 

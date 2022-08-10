@@ -48,9 +48,9 @@ void SettingsState::initKeybinds()
 
 void SettingsState::initGui()
 {
-
-	this->buttons["BACK"] = new gui::Button(1400, 900, 500, 100, &this->font, "BACK", 24, sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 200), sf::Color(70, 70, 70, 230), sf::Color(150, 150, 150, 230), sf::Color(20, 20, 20, 200));
-	this->buttons["APPLY"] = new gui::Button(1400, 800, 500, 100, &this->font, "APPLY", 24, sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 200), sf::Color(184, 134, 11, 230), sf::Color(218, 165, 32, 230), sf::Color(184, 134, 11, 200));
+	const sf::VideoMode& vm = this->stateData->gfxSettings->resolution;
+	this->buttons["BACK"] = new gui::Button(gui::p2pX(72.91f, vm), gui::p2pY(83.33f, vm), gui::p2pX(26.04f, vm), gui::p2pY(9.25f, vm), &this->font, "BACK", gui::calcCharSize(vm), sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 200), sf::Color(70, 70, 70, 230), sf::Color(150, 150, 150, 230), sf::Color(20, 20, 20, 200));
+	this->buttons["APPLY"] = new gui::Button(gui::p2pX(72.91f, vm), gui::p2pY(74.07f, vm), gui::p2pX(26.04f, vm), gui::p2pY(9.25f, vm), &this->font, "APPLY", gui::calcCharSize(vm), sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 230), sf::Color(0, 0, 0, 200), sf::Color(184, 134, 11, 230), sf::Color(218, 165, 32, 230), sf::Color(184, 134, 11, 200));
 
 	std::vector<std::string> modes_str;
 	for (auto& i : this->modes)
@@ -59,7 +59,7 @@ void SettingsState::initGui()
 	}
 
 	
-	this->dropDownLists["RESOLUTION"] = new gui::DropDownBox(800, 450, 200, 50, font, modes_str.data(), modes_str.size());
+	this->dropDownLists["RESOLUTION"] = new gui::DropDownBox(gui::p2pX(42.f, vm), gui::p2pY(42.f, vm), gui::p2pX(10.4f, vm), gui::p2pY(4.5f, vm), font, modes_str.data(), modes_str.size());
 }
 
 void SettingsState::initText()
