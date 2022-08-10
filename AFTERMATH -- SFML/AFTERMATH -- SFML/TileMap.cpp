@@ -207,13 +207,13 @@ void TileMap::updateCollision(Entity* entity)
 	//WORLD BOUNDS
 	if (entity->getPosition().x < 0.f)
 		entity->setPosition(0.f, entity->getPosition().y);
-	else if (entity->getPosition().x > this->maxSizeWorldF.x)
-		entity->setPosition(this->maxSizeWorldF.x, entity->getPosition().y);
+	else if (entity->getPosition().x + entity->getGlobalBounds().width > this->maxSizeWorldF.x)
+		entity->setPosition(this->maxSizeWorldF.x - entity->getGlobalBounds().width, entity->getPosition().y);
 
 	if (entity->getPosition().y < 0.f)
 		entity->setPosition( entity->getPosition().x, 0.f);
-	else if (entity->getPosition().y > this->maxSizeWorldF.y)
-		entity->setPosition( entity->getPosition().x, this->maxSizeWorldF.y );
+	else if (entity->getPosition().y + entity->getGlobalBounds().height > this->maxSizeWorldF.y)
+		entity->setPosition( entity->getPosition().x, this->maxSizeWorldF.y - entity->getGlobalBounds().height);
 
 	//TILES
 }

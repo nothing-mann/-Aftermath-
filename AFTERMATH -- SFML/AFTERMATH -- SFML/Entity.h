@@ -30,12 +30,14 @@ public:
 	
 	//Accessors
 	virtual const sf::Vector2f& getPosition() const;
+	virtual const sf::FloatRect getGlobalBounds() const;
+
 	//Modifiers
 	virtual void setPosition(const float x, const float y);
 
 	//Functions
 	virtual void move(const float dir_x, const float dir_y, const float& dt);
-	virtual void update(const float& dt);
-	virtual void render(sf::RenderTarget& target) ;
+	virtual void update(const float& dt) = 0;
+	virtual void render(sf::RenderTarget& target) = 0;
 };
 
