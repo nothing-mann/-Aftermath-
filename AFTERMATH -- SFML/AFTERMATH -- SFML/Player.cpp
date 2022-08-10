@@ -21,7 +21,7 @@ Player::Player(float x, float y, sf::Texture& texture_sheet)
 	this->createHitboxComponent(this->sprite, 2.f, 18.f, 24.f, 30.f);
 	this->createMovementComponent(200.f, 1500.f, 500.f);
 	this->createAnimationComponent( texture_sheet);
-	this->createAttributeComponent(0);
+	this->createAttributeComponent(1);
 
 	this->animationComponent->addAnimation("IDLE", 10.f, 0, 0, 3, 0, 48, 48);
 	this->animationComponent->addAnimation("JUMP", 10.f, 0, 2, 3, 2, 48, 48);
@@ -36,9 +36,33 @@ Player::~Player()
 }
 
 
+//Accesors
+AttributeComponent* Player::getAttributeComponent()
+{
+	return this->attributeComponent;
+}
+
+
 
 
 //Functions
+void Player::loseHP(const int hp)
+{
+}
+
+void Player::gainHP(const int hp)
+{
+}
+
+void Player::loseEXP(const int exp)
+{
+}
+
+void Player::gainEXP(const int exp)
+{
+}
+
+
 void Player::updateJump() //Change it to attack once it is done
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
