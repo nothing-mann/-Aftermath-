@@ -78,6 +78,21 @@ const sf::Texture* TileMap::getTileSheet() const
 	return &this->tileTextureSheet;
 }
 
+const int TileMap::getLayerSize(const int x, const int y, const int layer) const
+{
+	if (x >= 0 && x < this->map.size())
+	{
+		if (y >= 0 && y < this->map[x].size())
+		{
+			if (layer >= 0 && layer < this->map[x][y].size())
+			{
+				return this->map[x][y][layer].size();
+			}
+		}
+	}
+	return -1;
+}
+
 //Functions
 void TileMap::addTile(const int x, const int y, const int z, const sf::IntRect& tex_rect, const bool& collision, const short& type)
 {
@@ -341,82 +356,66 @@ void TileMap::update()
 {
 }
 
-void TileMap::render(sf::RenderTarget& target, Entity* entity)
+void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 {
-	if (entity)
+	this->layer = 0;
+
+	this->fromX = gridPosition.x - 4;
+	if (this->fromX < 0)
+		this->fromX = 0;
+	else if (this->fromX > this->maxSizeWorldGrid.x)
+		this->fromX = this->maxSizeWorldGrid.x;
+
+	this->toX = gridPosition.x + 5;
+	if (this->toX < 0)
+		this->toX = 0;
+	else if (this->toX > this->maxSizeWorldGrid.x)
+		this->toX = this->maxSizeWorldGrid.x;
+
+	this->fromY = gridPosition.y - 3;
+	if (this->fromY < 0)
+		this->fromY = 0;
+	else if (this->fromY > this->maxSizeWorldGrid.y)
+		this->fromY = this->maxSizeWorldGrid.y;
+
+	this->toY = gridPosition.y + 5;
+	if (this->toY < 0)
+		this->toY = 0;
+	else if (this->toY > this->maxSizeWorldGrid.y)
+		this->toY = this->maxSizeWorldGrid.y;
+
+
+	for (int x = this->fromX; x < this->toX; x++)
 	{
-		this->layer = 0;
-
-		this->fromX = entity->getGridPosition(this->gridSizeI
-		).x - 4;
-		if (this->fromX < 0)
-			this->fromX = 0;
-		else if (this->fromX > this->maxSizeWorldGrid.x)
-			this->fromX = this->maxSizeWorldGrid.x;
-
-		this->toX = entity->getGridPosition(this->gridSizeI
-		).x + 5;
-		if (this->toX < 0)
-			this->toX = 0;
-		else if (this->toX > this->maxSizeWorldGrid.x)
-			this->toX = this->maxSizeWorldGrid.x;
-
-		this->fromY = entity->getGridPosition(this->gridSizeI
-		).y - 3;
-		if (this->fromY < 0)
-			this->fromY = 0;
-		else if (this->fromY > this->maxSizeWorldGrid.y)
-			this->fromY = this->maxSizeWorldGrid.y;
-
-		this->toY = entity->getGridPosition(this->gridSizeI
-		).y + 5;
-		if (this->toY < 0)
-			this->toY = 0;
-		else if (this->toY > this->maxSizeWorldGrid.y)
-			this->toY = this->maxSizeWorldGrid.y;
-
-
-		for (int x = this->fromX; x < this->toX; x++)
+		for (int y = this->fromY; y < this->toY; y++)
 		{
-			for (int y = this->fromY; y < this->toY; y++)
+			for (int k = 0; k < this->map[x][y][this->layer].size(); k++)
 			{
-				for (int k = 0; k < this->map[x][y][this->layer].size(); k++)
+				if (this->map[x][y][this->layer][k]->getType() == TileTypes::DOODAD)
+				{
+					this->deferredRenderStack.push(this->map[x][y][this->layer][k]);
+				}
+				else
 				{
 					this->map[x][y][this->layer][k]->render(target);
-					if (this->map[x][y][this->layer][k]->getCollision())
-					{
-						this->collisionBox.setPosition(this->map[x][y][this->layer][k]->getPosition());
-						target.draw(this->collisionBox);
-					}
 				}
 				
-			}
-		}
-	}
-
-
-
-
-	/*else
-	{
-		for (auto& x : this->map)
-		{
-			for (auto& y : x)
-			{
-				for (auto& z : y)
+				if (this->map[x][y][this->layer][k]->getCollision())
 				{
-					if (z != nullptr)
-					{
-						z->render(target);
-						if (z->getCollision())
-						{
-							this->collisionBox.setPosition(z->getPosition());
-							target.draw(this->collisionBox);
-						}
-					}
+					this->collisionBox.setPosition(this->map[x][y][this->layer][k]->getPosition());
+					target.draw(this->collisionBox);
 				}
 			}
+				
 		}
-	}*/
-	
+	}
+}
+
+void TileMap::renderDeferred(sf::RenderTarget& target)
+{
+	while (!this->deferredRenderStack.empty())
+	{
+		deferredRenderStack.top()->render(target);
+		deferredRenderStack.pop();
+	}
 }

@@ -18,9 +18,10 @@ Entity::Entity()
 
 Entity::~Entity()
 {
+	delete this->hitboxComponent;
 	delete this->movementComponent;
 	delete this->animationComponent;
-	delete this->hitboxComponent;
+	delete this->attributeComponent;
 }
 void Entity::createHitboxComponent(sf::Sprite& sprite, const float offset_x, const float offset_y, float width, float height)
 {
@@ -42,6 +43,11 @@ void Entity::createMovementComponent(const float maxVelocity, float acceleration
 void Entity::createAnimationComponent( sf::Texture& texture_sheet)
 {
 	this->animationComponent = new AnimationComponent(this->sprite, texture_sheet);
+}
+
+void Entity::createAttributeComponent()
+{
+	this->attributeComponent = new AttributeComponent();
 }
 
 

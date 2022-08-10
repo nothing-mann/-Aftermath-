@@ -3,6 +3,7 @@
 #include "HitboxComponent.h"
 #include "MovementComponent.h"
 #include "AnimationComponent.h"
+#include "AttributeComponent.h"
 
 //Entity will be the base class for any type of characters we have
 class Entity
@@ -17,6 +18,7 @@ protected:
 	HitboxComponent* hitboxComponent;
 	MovementComponent* movementComponent;
 	AnimationComponent* animationComponent;
+	AttributeComponent* attributeComponent;
 public:
 	Entity();
 	virtual ~Entity();
@@ -26,6 +28,7 @@ public:
 	void setTexture(sf::Texture& texture);
 	void createMovementComponent(const float maxVelocity, float acceleration, float deceleration);
 	void createAnimationComponent(sf::Texture& texture_sheet);
+	void createAttributeComponent();
 
 	
 	//Accessors

@@ -8,6 +8,7 @@ void EditorState::initVariables()
 	this->collision = false;
 	this->type = TileTypes::DEFAULT;
 	this->cameraSpeed = 100.f;
+	this->layer = 0;
 }
 
 void EditorState::initView()
@@ -97,7 +98,7 @@ void EditorState::initGui()
 
 void EditorState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, "Resources/Images/Tiles/tilesheet1.png");
+	this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/Images/Tiles/tilesheet1.png");
 }
 
 EditorState::EditorState(StateData* state_data)
@@ -232,7 +233,7 @@ void EditorState::updateGui(const float& dt)
 	
 	this->cursorText.setPosition(this->mousePosView.x + 100.f, this->mousePosView.y - 50.f);
 	std::stringstream ss;
-	ss << this->mousePosView.x << " " << this->mousePosView.y << "\n" << this->mousePosGrid.x << " " << this->mousePosGrid.y << "\n" << this->textureRect.left << " " << this->textureRect.top << "\nColliaion: " << this->collision << "\n" << "Type: " << this->type;
+	ss << this->mousePosView.x << " " << this->mousePosView.y << "\n" << this->mousePosGrid.x << " " << this->mousePosGrid.y << "\n" << this->textureRect.left << " " << this->textureRect.top << "\nColliaion: " << this->collision << "\n" << "Type: " << this->type << "\n" << "Tiles: " << this->tileMap->getLayerSize(this-> mousePosGrid.x, this->mousePosGrid.y, this->layer);
 	this->cursorText.setString(ss.str());
 	
 
@@ -309,7 +310,8 @@ void EditorState::render(sf::RenderTarget* target)
 		target = this->window;
 	
 	target->setView(this->view);
-	this->tileMap->render(*target);
+	this->tileMap->render(*target, this->mousePosGrid);
+	this->tileMap->renderDeferred(*target);
 
 	target->setView(this->window->getDefaultView());
 	this->renderButtons(*target);

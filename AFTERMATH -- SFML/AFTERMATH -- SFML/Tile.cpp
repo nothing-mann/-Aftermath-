@@ -29,7 +29,17 @@ Tile::~Tile()
 }
 
 
+
 //Accessor
+const short& Tile::getType() const
+{
+	return this->type;
+}
+
+
+
+
+//Functions
 const bool& Tile::getCollision() const
 {
 	return this->collision;
