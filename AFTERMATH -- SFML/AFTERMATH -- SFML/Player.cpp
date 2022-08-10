@@ -21,6 +21,7 @@ Player::Player(float x, float y, sf::Texture& texture_sheet)
 	this->createHitboxComponent(this->sprite, 2.f, 18.f, 24.f, 30.f);
 	this->createMovementComponent(200.f, 1500.f, 500.f);
 	this->createAnimationComponent( texture_sheet);
+	this->createAttributeComponent(0);
 
 	this->animationComponent->addAnimation("IDLE", 10.f, 0, 0, 3, 0, 48, 48);
 	this->animationComponent->addAnimation("JUMP", 10.f, 0, 2, 3, 2, 48, 48);
@@ -109,6 +110,12 @@ void Player::updateAnimation(const float& dt)
 }
 void Player::update(const float& dt)
 {
+	//if(sf::Keyboard::isKeyPressed(sf::Keyboard::E))
+	//	this->attributeComponent->gainExp(20);
+	////this->attributeComponent->update();
+	//system("cls");
+	//std::cout << this->attributeComponent->debugPrint() << "\n";
+
 	this->movementComponent->update(dt);
 
 	this->updateJump();

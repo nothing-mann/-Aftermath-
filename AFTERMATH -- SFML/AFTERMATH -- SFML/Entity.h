@@ -28,10 +28,11 @@ public:
 	void setTexture(sf::Texture& texture);
 	void createMovementComponent(const float maxVelocity, float acceleration, float deceleration);
 	void createAnimationComponent(sf::Texture& texture_sheet);
-	void createAttributeComponent();
+	void createAttributeComponent(const unsigned level);
 
 	
 	//Accessors
+
 	virtual const sf::Vector2f& getPosition() const;
 	virtual const sf::Vector2i getGridPosition(const int gridSizeI) const;
 	virtual const sf::FloatRect getGlobalBounds() const;

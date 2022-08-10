@@ -10,18 +10,33 @@ public:
 	unsigned attributePoints;
 
 	//Attributes
-	unsigned strength;
-	unsigned vitality;
-	unsigned dexterity;
-	unsigned agility;
-	unsigned intelligence;
+	int vitality;
+	int strength;
+	int dexterity;
+	int agility;
+	int intelligence;
 
 	//Stats
+	int hp;
+	int hpMax;
+	int damageMin;
+	int damageMax;
+	int accuracy;
+	int defence;
+	int luck;
+
 
 	//Construc/Destruc
-	AttributeComponent();
+	AttributeComponent(unsigned level);
 	virtual ~AttributeComponent();
 
 	//Functions
+	std::string debugPrint() const;
+	void gainExp(const unsigned exp);
+
+	void updateStats(const bool reset);
+	void updateLevel();
+
+	void update();
 };
 
