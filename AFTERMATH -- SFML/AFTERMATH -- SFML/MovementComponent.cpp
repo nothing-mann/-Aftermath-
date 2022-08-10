@@ -59,6 +59,28 @@ const bool MovementComponent::getState(const short unsigned state) const
 	return false;
 }
 
+void MovementComponent::stopVelocity()
+{
+	//Reset the velocity to 0
+
+	this->velocity.x = 0.f;
+	this->velocity.y = 0.f;
+}
+
+void MovementComponent::stopVelocityX()
+{
+	//Resets the velocity x to 0
+	
+	this->velocity.x = 0.f;
+}
+
+void MovementComponent::stopVelocityY()
+{
+	//Resets the velocity y to 0
+
+	this->velocity.y = 0.f;
+}
+
 
 
 //Function
