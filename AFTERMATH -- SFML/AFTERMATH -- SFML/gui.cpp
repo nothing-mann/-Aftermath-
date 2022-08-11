@@ -23,14 +23,15 @@ const float gui::p2pY(const float perc, const sf::VideoMode& vm)
 	return std::floor(static_cast<float>(vm.height) * (perc / 100.f));
 }
 
-const unsigned gui::calcCharSize(const sf::VideoMode& vm)
+const unsigned gui::calcCharSize(const sf::VideoMode& vm, const unsigned modifier)
 {
 	/*
 	* calculates the character size for text using the current resolution and a constant.
 	* @param    sf::Videomode& vm    the current videomode of the window (resolution).
+	* @param    unsigned modifier    used to modify the character size in a more custom way
 	*	@return	 unsigned			the calculated character size value
 	*/
-	return static_cast<unsigned>((vm.width + vm.height) / 60);
+	return static_cast<unsigned>((vm.width + vm.height) / modifier);
 }
 
 gui::Button::Button(float x, float y, float width, float height, sf::Font* font, std::string text,unsigned character_size, sf::Color text_idle_color, sf::Color text_hover_color, sf::Color text_active_color,sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor, sf::Color outline_idle_color, sf::Color outline_hover_color, sf::Color outline_active_color, short unsigned id)

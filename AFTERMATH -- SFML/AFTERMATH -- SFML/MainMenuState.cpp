@@ -44,7 +44,7 @@ void MainMenuState::initKeybinds()
 	ifs.close();
 }
 
-void MainMenuState::initButtons()
+void MainMenuState::initGui()
 {
 	const sf::VideoMode& vm = this->stateData->gfxSettings->resolution;
 	this->buttons["GAME_STATE"] = new gui::Button(gui::p2pX(36.97f, vm), gui::p2pY(23.14f, vm), gui::p2pX(26.04f, vm), gui::p2pY(9.25f, vm), &this->font, "NEW GAME", gui::calcCharSize(vm), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 255), sf::Color(255, 255, 255, 200), sf::Color(184, 134, 11, 255), sf::Color(218, 165, 32, 255), sf::Color(184, 134, 11, 200));
@@ -54,6 +54,16 @@ void MainMenuState::initButtons()
 
 }
 
+void MainMenuState::resetGui()
+{
+	/*
+	* Clears the Gui elements and reinitializes the GUI.
+	* @return void
+	*/
+	this->buttons.clear();
+	this->initGui();
+}
+
 MainMenuState::MainMenuState(StateData* state_data)
 	:State(state_data)
 {
@@ -61,9 +71,9 @@ MainMenuState::MainMenuState(StateData* state_data)
 	this->initBackground();
 	this->initFonts();
 	this->initKeybinds();
-	this->initButtons();
+	this->initGui();
 
-
+	this->resetGui();
 }
 
 MainMenuState::~MainMenuState()
