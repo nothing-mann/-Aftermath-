@@ -3,7 +3,7 @@
 //Initializer functions
 void Player::initVariables()
 {
-	this->jumping = false;
+	this->attacking = false;
 }
 
 void Player::initComponents()
@@ -18,15 +18,17 @@ Player::Player(float x, float y, sf::Texture& texture_sheet)
 
 	this->setPosition(x, y);
 
-	this->createHitboxComponent(this->sprite, 2.f, 18.f, 24.f, 30.f);
-	this->createMovementComponent(200.f, 1500.f, 500.f);
+	this->createHitboxComponent(this->sprite, 10.f, 5.f, 44.f, 54.f);
+	this->createMovementComponent(200.f, 1500.f, 900.f);
 	this->createAnimationComponent( texture_sheet);
 	this->createAttributeComponent(1);
 
-	this->animationComponent->addAnimation("IDLE", 10.f, 0, 0, 3, 0, 48, 48);
-	this->animationComponent->addAnimation("JUMP", 10.f, 0, 2, 3, 2, 48, 48);
-	this->animationComponent->addAnimation("RUN", 1.5f, 0, 4, 5, 4, 48, 48);
-	this->animationComponent->addAnimation("WALK", 10.f, 0, 8, 5, 8, 48, 48);
+	this->animationComponent->addAnimation("IDLE", 15.f, 0, 0, 8, 0, 64, 64);
+	this->animationComponent->addAnimation("WALK_DOWN", 1.f, 0, 1, 3, 1, 64, 64);
+	this->animationComponent->addAnimation("WALK_LEFT", 1.f, 4, 1, 7, 1, 64, 64);
+	this->animationComponent->addAnimation("WALK_RIGHT", 1.f, 8, 1, 11, 1, 64, 64);
+	this->animationComponent->addAnimation("WALK_UP", 1.f, 12, 1, 15, 1, 64, 64);
+	this->animationComponent->addAnimation("ATTACK", 5.f, 0, 2, 1, 2, 64, 64);
 
 }
 
@@ -73,18 +75,18 @@ void Player::gainEXP(const int exp)
 }
 
 
-void Player::updateJump() //Change it to attack once it is done
+void Player::updateAttack() //Change it to attack once it is done
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
-		this->jumping = true;
+		//this->attacking = true;
 
 	}
 }
 
 void Player::updateAnimation(const float& dt)
 {
-	if (this->jumping)
+	if (this->attacking)
 	{
 		//Set origin depending on direction
 		if (this->sprite.getScale().x > 0.f) //Facing right
@@ -96,9 +98,9 @@ void Player::updateAnimation(const float& dt)
 			this->sprite.setOrigin(30.f, -4.f);
 		}
 		//Animate and check for animation and
-		if (this->animationComponent->play("JUMP", dt, true)) //When attacking feature is added set the priority animation true to the attack animation
+		if (this->animationComponent->play("ATTACK", dt, true)) //When attacking feature is added set the priority animation true to the attack animation
 		{
-			this->jumping = false;
+			this->attacking = false;
 
 			if (this->sprite.getScale().x > 0.f) //Facing right
 			{
@@ -114,32 +116,22 @@ void Player::updateAnimation(const float& dt)
 	}
 	if (this->movementComponent->getState(IDLE))
 		this->animationComponent->play("IDLE", dt);
-	else if (this->movementComponent->getState(MOVING_RIGHT))
-	{
-		if (this->sprite.getScale().x < 0.f)
-		{
-			this->sprite.setOrigin(0.f, 0.f);
-			this->sprite.setScale(1.f, 1.f);
-		}
-		this->animationComponent->play("RUN", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
-	}
 	else if (this->movementComponent->getState(MOVING_LEFT))
 	{
-		if (this->sprite.getScale().x > 0.f)
-		{
-			this->sprite.setOrigin(30.f, 0.f);
-			this->sprite.setScale(-1.f, 1.f);
-		}
-
-		this->animationComponent->play("RUN", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
+		
+		this->animationComponent->play("WALK_LEFT", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
+	}
+	else if (this->movementComponent->getState(MOVING_RIGHT))
+	{
+		this->animationComponent->play("WALK_RIGHT", dt, this->movementComponent->getVelocity().x, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_UP))
 	{
-		this->animationComponent->play("RUN", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
+		this->animationComponent->play("WALK_UP", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
 	else if (this->movementComponent->getState(MOVING_DOWN))
 	{
-		this->animationComponent->play("RUN", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
+		this->animationComponent->play("WALK_DOWN", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
 }
 void Player::update(const float& dt)
@@ -152,16 +144,17 @@ void Player::update(const float& dt)
 
 	this->movementComponent->update(dt);
 
-	this->updateJump();
+	this->updateAttack();
 
 	this->updateAnimation(dt);
 
 	this->hitboxComponent->update();
 }
 
-void Player::render(sf::RenderTarget& target)
+void Player::render(sf::RenderTarget& target, const bool show_hitbox)
 {
 	target.draw(this->sprite);
 
-	this->hitboxComponent->render(target);
+	if(show_hitbox)
+		this->hitboxComponent->render(target);
 }

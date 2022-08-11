@@ -5,7 +5,7 @@ class Player :
 {
 private:
     //Variables
-    bool jumping; //Convert the jumping into attacking once it is done
+    bool attacking; //Convert the jumping into attacking once it is done
 
     //Initializer functions
     void initVariables();
@@ -24,9 +24,9 @@ public:
     void loseEXP(const int exp);
     void gainEXP(const int exp);
 
-    void updateJump();
+    void updateAttack();
     void updateAnimation(const float& dt);
     void update(const float& dt);
-    void render(sf::RenderTarget& target);
+    void render(sf::RenderTarget& target, const bool show_hitbox = false);
 };
 

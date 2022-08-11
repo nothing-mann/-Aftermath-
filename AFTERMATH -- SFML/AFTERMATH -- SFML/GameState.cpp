@@ -61,7 +61,7 @@ void GameState::initFonts()
 void GameState::initTextures()
 {
 
-	this->textures["PLAYER_IDLE"].loadFromFile("Resources/Images/Sprites/Player/Biker.png");
+	this->textures["PLAYER_IDLE"].loadFromFile("Resources/Images/Sprites/Player/player1.png");
 }
 
 void GameState::initPauseMenu()
@@ -84,7 +84,7 @@ void GameState::initPlayerGUI()
 
 void GameState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/Images/Tiles/tilesheet1.png");
+	this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/Images/Tiles/tilesheet3.png");
 	this->tileMap->loadFromFile("text.ammp");
 }
 
@@ -200,9 +200,9 @@ void GameState::render(sf::RenderTarget* target)
 	this->renderTexture.clear();
 
 	this->renderTexture.setView(this->view);
-	this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)));
+	this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)), false);
 
-	this->player->render(this->renderTexture);
+	this->player->render(this->renderTexture, false);
 
 	this->tileMap->renderDeferred(this->renderTexture);
 

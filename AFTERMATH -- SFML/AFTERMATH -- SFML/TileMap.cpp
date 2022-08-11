@@ -57,7 +57,7 @@ TileMap::TileMap(float gridSize, int width, int height, std::string texture_file
 			}
 		}
 	}
-	this->tileTextureSheet.loadFromFile("Resources/Images/Tiles/tilesheet1.png");
+	this->tileTextureSheet.loadFromFile("Resources/Images/Tiles/tilesheet3.png");
 
 	this->collisionBox.setSize(sf::Vector2f(gridSize, gridSize));
 	this->collisionBox.setFillColor(sf::Color(255, 0, 0, 50));
@@ -356,7 +356,7 @@ void TileMap::update()
 {
 }
 
-void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
+void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition, const bool show_collision)
 {
 	this->layer = 0;
 
@@ -400,10 +400,13 @@ void TileMap::render(sf::RenderTarget& target, const sf::Vector2i& gridPosition)
 					this->map[x][y][this->layer][k]->render(target);
 				}
 				
-				if (this->map[x][y][this->layer][k]->getCollision())
+				if (show_collision)
 				{
-					this->collisionBox.setPosition(this->map[x][y][this->layer][k]->getPosition());
-					target.draw(this->collisionBox);
+					if (this->map[x][y][this->layer][k]->getCollision())
+					{
+						this->collisionBox.setPosition(this->map[x][y][this->layer][k]->getPosition());
+						target.draw(this->collisionBox);
+					}
 				}
 			}
 				

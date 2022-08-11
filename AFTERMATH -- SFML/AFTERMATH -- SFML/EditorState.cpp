@@ -79,7 +79,7 @@ void EditorState::initButtons()
 
 void EditorState::initGui()
 {
-	this->sidebar.setSize(sf::Vector2f(80.f, static_cast<float>(this->stateData->gfxSettings->resolution.height)));
+	this->sidebar.setSize(sf::Vector2f(60.f, static_cast<float>(this->stateData->gfxSettings->resolution.height)));
 	this->sidebar.setFillColor(sf::Color(50, 50, 50, 100));
 	this->sidebar.setOutlineColor(sf::Color(200, 200, 200, 150));
 	this->sidebar.setOutlineThickness(1.f);
@@ -92,14 +92,14 @@ void EditorState::initGui()
 	this->selectorRect.setTexture(this->tileMap->getTileSheet());
 	this->selectorRect.setTextureRect(this->textureRect);
 
-	this->textureSelector = new gui::TextureSelector(20.f, 20.f, 500.f, 500.f,this->stateData->gridSize, this->tileMap->getTileSheet(), this->font, "TS");
+	this->textureSelector = new gui::TextureSelector(20.f, 20.f, 750.f, 750.f,this->stateData->gridSize, this->tileMap->getTileSheet(), this->font, "TS");
 
 
 }
 
 void EditorState::initTileMap()
 {
-	this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/Images/Tiles/tilesheet1.png");
+	this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/Images/Tiles/tilesheet3.png");
 }
 
 EditorState::EditorState(StateData* state_data)
@@ -234,7 +234,7 @@ void EditorState::updateGui(const float& dt)
 	
 	this->cursorText.setPosition(this->mousePosView.x + 100.f, this->mousePosView.y - 50.f);
 	std::stringstream ss;
-	ss << this->mousePosView.x << " " << this->mousePosView.y << "\n" << this->mousePosGrid.x << " " << this->mousePosGrid.y << "\n" << this->textureRect.left << " " << this->textureRect.top << "\nColliaion: " << this->collision << "\n" << "Type: " << this->type << "\n" << "Tiles: " << this->tileMap->getLayerSize(this-> mousePosGrid.x, this->mousePosGrid.y, this->layer);
+	ss << this->mousePosView.x << " " << this->mousePosView.y << "\n" << this->mousePosGrid.x << " " << this->mousePosGrid.y << "\n" << this->textureRect.left << " " << this->textureRect.top << "\n" << "Colliaion: " << this->collision << "\n" << "Type: " << this->type << "\n" << "Tiles: " << this->tileMap->getLayerSize(this-> mousePosGrid.x, this->mousePosGrid.y, this->layer);
 	this->cursorText.setString(ss.str());
 	
 
@@ -293,9 +293,9 @@ void EditorState::renderGui(sf::RenderTarget& target)
 	if (this->textureSelector->getActive())
 	{
 		target.setView(this->view);
-		target.draw(this->selectorRect);
+		
 	}
-
+	target.draw(this->selectorRect);
 	target.setView(this->window->getDefaultView());
 	this->textureSelector->render(target);
 	target.draw(this->sidebar);
@@ -311,7 +311,7 @@ void EditorState::render(sf::RenderTarget* target)
 		target = this->window;
 	
 	target->setView(this->view);
-	this->tileMap->render(*target, this->mousePosGrid);
+	this->tileMap->render(*target, this->mousePosGrid, true);
 	this->tileMap->renderDeferred(*target);
 
 	target->setView(this->window->getDefaultView());
