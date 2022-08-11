@@ -72,6 +72,14 @@ void GameState::initPauseMenu()
 	this->pmenu->addButton("QUIT", gui::p2pY(74.f, vm), gui::p2pX(26.04f, vm), gui::p2pY(9.25f, vm), gui::calcCharSize(vm), "Quit");
 }
 
+void GameState::initShaders()
+{
+	if (!this->core_shader.loadFromFile("vertex_shader.vert", "fragment_shader.frag"))
+	{
+		std::cout << "ERROR::GAMESTATE::COULD NOT LOAD SHADER." << "\n";
+	}
+}
+
 void GameState::initPlayers()
 {
 	this->player = new Player(0, 0, this->textures["PLAYER_IDLE"]);
@@ -98,6 +106,7 @@ GameState::GameState(StateData* state_data)
 	this->initTextures();
 	
 	this->initPauseMenu();
+	this->initShaders();
 	this->initPlayers();
 	this->initPlayerGUI();
 	this->initTileMap();
@@ -115,9 +124,30 @@ GameState::~GameState()
 void GameState::updateView(const float& dt)
 {
 	this->view.setCenter(
-		std::floor(this->player->getPosition().x + (static_cast<float>(this->mousePosWindow.x) - static_cast<float>(this->stateData->gfxSettings->resolution.width/2)) / 5.f),
-		std::floor(this->player->getPosition().y + (static_cast<float>(this->mousePosWindow.y) - static_cast<float>(this->stateData->gfxSettings->resolution.height / 2)) / 5.f)
+		std::floor(this->player->getPosition().x + (static_cast<float>(this->mousePosWindow.x) - static_cast<float>(this->stateData->gfxSettings->resolution.width/2)) / 10.f),
+		std::floor(this->player->getPosition().y + (static_cast<float>(this->mousePosWindow.y) - static_cast<float>(this->stateData->gfxSettings->resolution.height / 2)) / 10.f)
 	);
+
+	if (this->view.getCenter().x - this->view.getSize().x / 2.f < 0.f)
+	{
+		this->view.setCenter(0.f + this->view.getSize().x / 2.f, this->view.getCenter().y);
+	}
+	else if(this->view.getCenter().x + this->view.getSize().x / 2.f > 3000.f)
+	{
+		this->view.setCenter(3000.f - this->view.getSize().x / 2.f, this->view.getCenter().y);
+	}
+	if (this->view.getCenter().y - this->view.getSize().y / 2.f < 0.f)
+	{
+		this->view.setCenter(this->view.getCenter().x, 0.f + this->view.getSize().y / 2.f);
+	}
+	else if (this->view.getCenter().y + this->view.getSize().y / 2.f > 3000.f)
+	{
+		this->view.setCenter(this->view.getCenter().x, 3000.f - this->view.getSize().y / 2.f);
+	}
+
+	this->viewGridPosition.x = static_cast<int>(this->view.getCenter().x) /static_cast<int> (this->stateData->gridSize);
+	this->viewGridPosition.y = static_cast<int>(this->view.getCenter().y) / static_cast<int> (this->stateData->gridSize);
+
 }
 void GameState::updateInput(const float& dt)
 {
@@ -181,7 +211,7 @@ void GameState::update(const float& dt)
 		this->updatePlayerInput(dt);
 		this->updateTileMap(dt);
 
-		this->player->update(dt);
+		this->player->update(dt, this->mousePosView);
 
 		this->playerGUI->update(dt);
 	}
@@ -200,11 +230,16 @@ void GameState::render(sf::RenderTarget* target)
 	this->renderTexture.clear();
 
 	this->renderTexture.setView(this->view);
-	this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)), false);
+	this->tileMap->render(
+		this->renderTexture, 
+		this->viewGridPosition,
+		&this->core_shader,
+		this->player->getCenter(),
+		false);
 
-	this->player->render(this->renderTexture, false);
+	this->player->render(this->renderTexture, &this->core_shader ,false);
 
-	this->tileMap->renderDeferred(this->renderTexture);
+	this->tileMap->renderDeferred(this->renderTexture, &this->core_shader, this->player->getCenter());
 
 
 	//Render GUI

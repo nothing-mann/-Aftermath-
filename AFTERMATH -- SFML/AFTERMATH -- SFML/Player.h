@@ -6,6 +6,8 @@ class Player :
 private:
     //Variables
     bool attacking; //Convert the jumping into attacking once it is done
+    sf::Texture weapon_texture;
+    sf::Sprite weapon_sprite;
 
     //Initializer functions
     void initVariables();
@@ -26,7 +28,7 @@ public:
 
     void updateAttack();
     void updateAnimation(const float& dt);
-    void update(const float& dt);
-    void render(sf::RenderTarget& target, const bool show_hitbox = false);
+    void update(const float& dt, sf::Vector2f& mouse_pos_view);
+    void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const bool show_hitbox = false);
 };
 

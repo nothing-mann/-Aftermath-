@@ -19,7 +19,7 @@ Player::Player(float x, float y, sf::Texture& texture_sheet)
 	this->setPosition(x, y);
 
 	this->createHitboxComponent(this->sprite, 10.f, 5.f, 44.f, 54.f);
-	this->createMovementComponent(200.f, 1500.f, 900.f);
+	this->createMovementComponent(200.f, 1600.f, 1000.f);
 	this->createAnimationComponent( texture_sheet);
 	this->createAttributeComponent(1);
 
@@ -30,6 +30,18 @@ Player::Player(float x, float y, sf::Texture& texture_sheet)
 	this->animationComponent->addAnimation("WALK_UP", 1.f, 12, 1, 15, 1, 64, 64);
 	this->animationComponent->addAnimation("ATTACK", 5.f, 0, 2, 1, 2, 64, 64);
 
+
+
+
+	//Visual Weapon
+	this->weapon_texture.loadFromFile("Resources/Images/Sprites/Player/bow.png");
+	this->weapon_sprite.setTexture(this->weapon_texture);
+
+	/*this->weapon_sprite.setOrigin
+	(
+		this->weapon_sprite.getGlobalBounds().width/2.f,
+		this->weapon_sprite.getGlobalBounds().height/2.f
+	);*/
 }
 
 Player::~Player()
@@ -50,23 +62,17 @@ AttributeComponent* Player::getAttributeComponent()
 //Functions
 void Player::loseHP(const int hp)
 {
-	this->attributeComponent->hp -= hp;
-	if (this->attributeComponent->hp < 0)
-		this->attributeComponent->hp = 0;
+	this->attributeComponent->loseHP(hp);
 }
 
 void Player::gainHP(const int hp)
 {
-	this->attributeComponent->hp += hp;
-	if (this->attributeComponent->hp > this->attributeComponent->hpMax)
-		this->attributeComponent->hp = this->attributeComponent->hpMax;
+	this->attributeComponent->gainHP(hp);
 }
 
 void Player::loseEXP(const int exp)
 {
-	this->attributeComponent->exp -= exp;
-	if (this->attributeComponent->exp < 0)
-		this->attributeComponent->exp = 0;
+	this->attributeComponent->loseEXP(exp);
 }
 
 void Player::gainEXP(const int exp)
@@ -88,30 +94,7 @@ void Player::updateAnimation(const float& dt)
 {
 	if (this->attacking)
 	{
-		//Set origin depending on direction
-		if (this->sprite.getScale().x > 0.f) //Facing right
-		{
-			this->sprite.setOrigin(0.f, -4.f);
-		}
-		else //Facing left
-		{
-			this->sprite.setOrigin(30.f, -4.f);
-		}
-		//Animate and check for animation and
-		if (this->animationComponent->play("ATTACK", dt, true)) //When attacking feature is added set the priority animation true to the attack animation
-		{
-			this->attacking = false;
-
-			if (this->sprite.getScale().x > 0.f) //Facing right
-			{
-				this->sprite.setOrigin(0.f, 0.f);
-			}
-			else //Facing left
-			{
-				this->sprite.setOrigin(30.f, 0.f);
-			}
-		}
-		//if (this->animationComponent->isDone("JUMP"))
+		
 
 	}
 	if (this->movementComponent->getState(IDLE))
@@ -134,7 +117,7 @@ void Player::updateAnimation(const float& dt)
 		this->animationComponent->play("WALK_DOWN", dt, this->movementComponent->getVelocity().y, this->movementComponent->getMaxVelocity());
 	}
 }
-void Player::update(const float& dt)
+void Player::update(const float& dt, sf::Vector2f& mouse_pos_view)
 {
 	//if(sf::Keyboard::isKeyPressed(sf::Keyboard::E))
 	//	this->attributeComponent->gainExp(20);
@@ -149,11 +132,37 @@ void Player::update(const float& dt)
 	this->updateAnimation(dt);
 
 	this->hitboxComponent->update();
+
+
+	//Update visual weapon
+	this->weapon_sprite.setPosition(this->getCenter());
+
+	float dX = mouse_pos_view.x - this->weapon_sprite.getPosition().x;
+	float dY = mouse_pos_view.y - this->weapon_sprite.getPosition().y;
+	const float PI = 3.14159265;
+	float deg = atan2(dY, dX) * 180 / PI;
+
+	this->weapon_sprite.setRotation(deg);
 }
 
-void Player::render(sf::RenderTarget& target, const bool show_hitbox)
+void Player::render(sf::RenderTarget& target, sf::Shader* shader, const bool show_hitbox)
 {
-	target.draw(this->sprite);
+	if (shader)
+	{
+		shader->setUniform("hasTexture", true);
+		shader->setUniform("lightPos", this->getCenter());
+		target.draw(this->sprite, shader);
+
+		shader->setUniform("hasTexture", true);
+		shader->setUniform("lightPos", this->getCenter());
+		target.draw(this->weapon_sprite, shader);
+	}
+	else
+	{
+		target.draw(this->sprite);
+		target.draw(this->weapon_sprite);
+	}
+	
 
 	if(show_hitbox)
 		this->hitboxComponent->render(target);

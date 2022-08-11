@@ -11,11 +11,15 @@ class GameState :
 {
 private:
     sf::View view;
+    sf::Vector2i viewGridPosition;
     sf::RenderTexture renderTexture;
     sf::Sprite renderSprite;
 
     sf::Font font;
     PauseMenu* pmenu;
+
+    sf::Shader core_shader;
+
     Player* player;
     PlayerGUI* playerGUI;
 
@@ -28,6 +32,7 @@ private:
     void initFonts();
     void initTextures();
     void initPauseMenu();
+    void initShaders();
     void initPlayers();
     void initPlayerGUI();
     void initTileMap();
