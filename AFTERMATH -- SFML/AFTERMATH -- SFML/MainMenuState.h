@@ -20,7 +20,6 @@ private:
 
     //Functions
     void initVariables();
-    void initBackground();
     void initFonts();
     void initKeybinds();
     void initGui();

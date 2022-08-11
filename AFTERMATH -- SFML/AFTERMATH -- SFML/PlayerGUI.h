@@ -1,11 +1,13 @@
 #pragma once
 #include "Player.h"
+#include "gui.h"
 
 class PlayerGUI
 {
 private:
 	Player* player;
 
+	sf::VideoMode& vm;
 	sf::Font font;
 
 	//LEVEL BAR
@@ -33,7 +35,7 @@ private:
 	void initHPBar();
 
 public:
-	PlayerGUI(Player* player);
+	PlayerGUI(Player* player, sf::VideoMode& vm);
 	virtual ~PlayerGUI();
 
 	//Functions
