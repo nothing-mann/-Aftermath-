@@ -4,7 +4,7 @@
 #include "PauseMenu.h"
 #include "TileMap.h"
 #include "PlayerGUI.h"
-
+#include "Bow.h"
 
 class GameState :
     public State

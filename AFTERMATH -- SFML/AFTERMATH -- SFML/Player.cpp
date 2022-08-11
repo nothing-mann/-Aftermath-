@@ -10,19 +10,8 @@ void Player::initComponents()
 {
 
 }
-//Constructors Destructors
-Player::Player(float x, float y, sf::Texture& texture_sheet)
+void Player::initAnimations()
 {
-	this->initVariables();
-	
-
-	this->setPosition(x, y);
-
-	this->createHitboxComponent(this->sprite, 10.f, 5.f, 44.f, 54.f);
-	this->createMovementComponent(200.f, 1600.f, 1000.f);
-	this->createAnimationComponent( texture_sheet);
-	this->createAttributeComponent(1);
-
 	this->animationComponent->addAnimation("IDLE", 15.f, 0, 0, 8, 0, 64, 64);
 	this->animationComponent->addAnimation("WALK_DOWN", 1.f, 0, 1, 3, 1, 64, 64);
 	this->animationComponent->addAnimation("WALK_LEFT", 1.f, 4, 1, 7, 1, 64, 64);
@@ -30,18 +19,23 @@ Player::Player(float x, float y, sf::Texture& texture_sheet)
 	this->animationComponent->addAnimation("WALK_UP", 1.f, 12, 1, 15, 1, 64, 64);
 	this->animationComponent->addAnimation("ATTACK", 5.f, 0, 2, 1, 2, 64, 64);
 
+}
+//Constructors Destructors
+Player::Player(float x, float y, sf::Texture& texture_sheet)
+{
+	this->initVariables();
 
+	this->createHitboxComponent(this->sprite, 10.f, 5.f, 44.f, 54.f);
+	this->createMovementComponent(200.f, 1600.f, 1000.f);
+	this->createAnimationComponent( texture_sheet);
+	this->createAttributeComponent(1);
+	this->createSkillComponent();
 
+	this->setPosition(x, y);
 
-	//Visual Weapon
-	this->weapon_texture.loadFromFile("Resources/Images/Sprites/Player/bow.png");
-	this->weapon_sprite.setTexture(this->weapon_texture);
+	this->initAnimations();
 
-	/*this->weapon_sprite.setOrigin
-	(
-		this->weapon_sprite.getGlobalBounds().width/2.f,
-		this->weapon_sprite.getGlobalBounds().height/2.f
-	);*/
+	
 }
 
 Player::~Player()
@@ -133,16 +127,7 @@ void Player::update(const float& dt, sf::Vector2f& mouse_pos_view)
 
 	this->hitboxComponent->update();
 
-
-	//Update visual weapon
-	this->weapon_sprite.setPosition(this->getCenter());
-
-	float dX = mouse_pos_view.x - this->weapon_sprite.getPosition().x;
-	float dY = mouse_pos_view.y - this->weapon_sprite.getPosition().y;
-	const float PI = 3.14159265;
-	float deg = atan2(dY, dX) * 180 / PI;
-
-	this->weapon_sprite.setRotation(deg);
+	this->bow.update(mouse_pos_view, this->getCenter());
 }
 
 void Player::render(sf::RenderTarget& target, sf::Shader* shader, const bool show_hitbox)
@@ -155,12 +140,12 @@ void Player::render(sf::RenderTarget& target, sf::Shader* shader, const bool sho
 
 		shader->setUniform("hasTexture", true);
 		shader->setUniform("lightPos", this->getCenter());
-		target.draw(this->weapon_sprite, shader);
+		this->bow.render(target, shader);
 	}
 	else
 	{
 		target.draw(this->sprite);
-		target.draw(this->weapon_sprite);
+		this->bow.render(target);
 	}
 	
 

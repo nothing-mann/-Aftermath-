@@ -1,17 +1,20 @@
 #pragma once
 #include "Entity.h"
+#include "Bow.h"
+
 class Player :
     public Entity
 {
 private:
     //Variables
     bool attacking; //Convert the jumping into attacking once it is done
-    sf::Texture weapon_texture;
-    sf::Sprite weapon_sprite;
+    Bow bow;
+
 
     //Initializer functions
     void initVariables();
     void initComponents();
+    void initAnimations();
 public:
     Player(float x, float y, sf::Texture& texture_sheet);
     virtual ~Player();
