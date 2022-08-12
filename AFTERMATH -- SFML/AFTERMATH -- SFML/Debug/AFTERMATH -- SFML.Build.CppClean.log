@@ -2,9 +2,8 @@ d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\vc143.pdb
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\vc143.idb
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\stdafx.obj
-d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\tilemap.obj
-d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\tile.obj
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\state.obj
+d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\skillcomponent.obj
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\settingsstate.obj
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\playergui.obj
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\player.obj
@@ -12,6 +11,7 @@ d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\movementcomponent.obj
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\mainmenustate.obj
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\main.obj
+d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\item.obj
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\hitboxcomponent.obj
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\gamestate.obj
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\game.obj
@@ -19,12 +19,15 @@ d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\editorstate.obj
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\gui.obj
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\graphicssettings.obj
+d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\bow.obj
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\attributecomponent.obj
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\animationcomponent.obj
-d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\bow.obj
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\weapon.obj
-d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\item.obj
-d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\skillcomponent.obj
+d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\tilemap.obj
+d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\tile.obj
+d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\rbow.obj
+d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\rangedweapon.obj
+d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\enemy.obj
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\debug\aftermath -- sfml.exe
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\aftermath -- sfml\debug\aftermath -- sfml.ilk
 d:\git\aftermath\project-3rd-sem-aftermath-\aftermath -- sfml\debug\aftermath -- sfml.pdb

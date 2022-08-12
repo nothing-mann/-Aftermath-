@@ -1,6 +1,6 @@
 #pragma once
 
-enum TileTypes {DEFAULT = 0, DAMAGING, DOODAD};
+enum TileTypes {DEFAULT = 0, DAMAGING, DOODAD,  ENEMYSPAWNER};
 
 class Tile
 {
@@ -26,7 +26,7 @@ public:
 	const bool intersects(const sf::FloatRect bounds) const;
 	const std::string getAsString() const;
 	
-	void update();
-	void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const sf::Vector2f playerPosition = sf::Vector2f());
+	virtual void update();
+	virtual void render(sf::RenderTarget& target, sf::Shader* shader = NULL, const sf::Vector2f player_position = sf::Vector2f());
 };
 

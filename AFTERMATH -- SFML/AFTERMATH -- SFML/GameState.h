@@ -5,6 +5,7 @@
 #include "TileMap.h"
 #include "PlayerGUI.h"
 #include "Bow.h"
+#include "Enemy.h"
 
 class GameState :
     public State
@@ -22,6 +23,8 @@ private:
 
     Player* player;
     PlayerGUI* playerGUI;
+
+
 
     TileMap* tileMap;
 

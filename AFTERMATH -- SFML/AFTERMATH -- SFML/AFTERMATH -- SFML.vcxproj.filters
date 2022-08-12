@@ -25,9 +25,6 @@
     <Filter Include="GUI">
       <UniqueIdentifier>{de3ddaa1-5a9c-439d-a60b-12122e51ac04}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Tile">
-      <UniqueIdentifier>{947dc900-118e-41e8-877b-8ff4abff88f8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Map">
       <UniqueIdentifier>{98c31516-ab70-4c35-82a3-1831c6c19fd9}</UniqueIdentifier>
     </Filter>
@@ -36,6 +33,12 @@
     </Filter>
     <Filter Include="Items\Weapon">
       <UniqueIdentifier>{02ac9efc-3b8b-4272-8391-5928d2720f7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items\RangedWeapon">
+      <UniqueIdentifier>{2952c1c5-d1ed-4990-a5e6-798cfdb308d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Tile">
+      <UniqueIdentifier>{947dc900-118e-41e8-877b-8ff4abff88f8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -82,7 +85,7 @@
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="Tile.cpp">
-      <Filter>Tile</Filter>
+      <Filter>Map\Tile</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
@@ -110,6 +113,18 @@
     </ClCompile>
     <ClCompile Include="SkillComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="RangedWeapon.cpp">
+      <Filter>Items\RangedWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Rbow.cpp">
+      <Filter>Items\RangedWeapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemySpawner.cpp">
+      <Filter>Map\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -153,7 +168,7 @@
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
-      <Filter>Tile</Filter>
+      <Filter>Map\Tile</Filter>
     </ClInclude>
     <ClInclude Include="stdafxc.h">
       <Filter>Header Files</Filter>
@@ -184,6 +199,18 @@
     </ClInclude>
     <ClInclude Include="SkillComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="RangedWeapon.h">
+      <Filter>Items\RangedWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Rbow.h">
+      <Filter>Items\RangedWeapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemySpawner.h">
+      <Filter>Map\Tile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
