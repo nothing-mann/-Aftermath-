@@ -156,7 +156,7 @@ void Entity::update(const float& dt, sf::Vector2f& mouse_pos_view)
 
 }
 
-void Entity::render(sf::RenderTarget& target, sf::Shader* shader, const bool show_hitbox)
+void Entity::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f light_position, const bool show_hitbox)
 {
 
 }

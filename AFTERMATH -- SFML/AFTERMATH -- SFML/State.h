@@ -10,6 +10,7 @@ class StateData
 {
 public:
 	StateData() {};
+
 	//Variables
 	float gridSize;
 	sf::RenderWindow* window;
