@@ -143,6 +143,7 @@
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="EnemyEditorMode.cpp" />
     <ClCompile Include="EnemySpawnerTile.cpp" />
+    <ClCompile Include="EnemySystem.cpp" />
     <ClCompile Include="GraphicsSettings.cpp" />
     <ClCompile Include="gui.cpp" />
     <ClCompile Include="EditorState.cpp" />
@@ -182,6 +183,8 @@
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyEditorMode.h" />
     <ClInclude Include="EnemySpawnerTile.h" />
+    <ClInclude Include="EnemySystem.h" />
+    <ClInclude Include="Enemy_includes.h" />
     <ClInclude Include="GraphicsSettings.h" />
     <ClInclude Include="gui.h" />
     <ClInclude Include="EditorState.h" />

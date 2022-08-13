@@ -92,6 +92,11 @@ void GameState::initPlayerGUI()
 	this->playerGUI = new PlayerGUI(this->player, this->stateData->gfxSettings->resolution);
 }
 
+void GameState::initEnemySystem()
+{
+	this->enemySystem = new EnemySystem(this->activeEnemies, this->textures);
+}
+
 void GameState::initTileMap()
 {
 	//this->tileMap = new TileMap(this->stateData->gridSize, 100, 100, "Resources/Images/Tiles/tilesheet3.png");
@@ -107,18 +112,13 @@ GameState::GameState(StateData* state_data)
 	this->initKeybinds();
 	this->initFonts();
 	this->initTextures();
-	
 	this->initPauseMenu();
 	this->initShaders();
 	this->initPlayers();
 	this->initPlayerGUI();
+	this->initEnemySystem();
 	this->initTileMap();
 
-	this->activeEnemies.push_back(new Rat(200.f, 100.f, this->textures["RAT1_SHEET"]));
-	this->activeEnemies.push_back(new Rat(500.f, 200.f, this->textures["RAT1_SHEET"]));
-	this->activeEnemies.push_back(new Rat(600.f, 300.f, this->textures["RAT1_SHEET"]));
-	this->activeEnemies.push_back(new Rat(400.f, 500.f, this->textures["RAT1_SHEET"]));
-	this->activeEnemies.push_back(new Rat(200.f, 400.f, this->textures["RAT1_SHEET"]));
 }
 
 GameState::~GameState()
@@ -127,6 +127,7 @@ GameState::~GameState()
 	delete this->player;
 	delete this->playerGUI;
 	delete this->tileMap;
+	delete this->enemySystem;
 
 	for (size_t i = 0; i < this->activeEnemies.size(); i++)
 	{
@@ -220,13 +221,28 @@ void GameState::updatePauseMenuButtons()
 
 void GameState::updateTileMap(const float& dt)
 {
+	this->tileMap->updateWorldBoundsCollision(this->player, dt);
+	this->tileMap->updateTileCollision(this->player, dt);
+	this->tileMap->updateTiles(this->player, dt, *this->enemySystem);
 
 	this->tileMap->update(this->player, dt);
 
 	for (auto* i : this->activeEnemies)
 	{
-		this->tileMap->update(i, dt);
+		this->tileMap->updateWorldBoundsCollision(i, dt);
+		this->tileMap->updateTileCollision(i, dt);
 	}
+}
+
+void GameState::updatePlayer(const float& dt)
+{
+}
+
+void GameState::updateEnemies(const float& dt)
+{
+
+	//this->activeEnemies.push_back(new Rat(200.f, 100.f, this->textures["RAT1_SHEET"]));
+
 }
 
 void GameState::update(const float& dt)

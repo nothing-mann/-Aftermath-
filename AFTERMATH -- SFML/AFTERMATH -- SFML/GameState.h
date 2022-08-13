@@ -5,8 +5,6 @@
 #include "TileMap.h"
 #include "PlayerGUI.h"
 #include "Bow.h"
-#include "Enemy.h"
-#include "Rat.h"
 
 class GameState :
     public State
@@ -26,10 +24,11 @@ private:
     PlayerGUI* playerGUI;
 
 
+    std::vector<Enemy*> activeEnemies;
+    EnemySystem* enemySystem;
+
 
     TileMap* tileMap;
-
-    std::vector<Enemy*> activeEnemies;
 
     //Functions
     void initDeferredRender();
@@ -41,7 +40,9 @@ private:
     void initShaders();
     void initPlayers();
     void initPlayerGUI();
+    void initEnemySystem();
     void initTileMap();
+
 public:
 
     GameState(StateData* state_data);
@@ -54,6 +55,8 @@ public:
     void updatePlayerGUI(const float& dt);
     void updatePauseMenuButtons();
     void updateTileMap(const float& dt);
+    void updatePlayer(const float& dt);
+    void updateEnemies(const float& dt);
     void update(const float& dt); // was a pure virtual function of State
     void render(sf::RenderTarget* target = nullptr); // was a pure virtual function of State
 };
