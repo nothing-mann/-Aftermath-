@@ -104,6 +104,11 @@ void GameState::initTileMap()
 	this->tileMap = new TileMap("text.ammp");
 }
 
+void GameState::initSystems()
+{
+	this->tts = new TextTagSystem("Fonts/Roboto-Medium.ttf");
+}
+
 GameState::GameState(StateData* state_data)
 	:State(state_data)
 {
@@ -118,6 +123,7 @@ GameState::GameState(StateData* state_data)
 	this->initPlayerGUI();
 	this->initEnemySystem();
 	this->initTileMap();
+	this->initSystems();
 
 }
 
@@ -128,6 +134,7 @@ GameState::~GameState()
 	delete this->playerGUI;
 	delete this->tileMap;
 	delete this->enemySystem;
+	delete this->tts;
 
 	for (size_t i = 0; i < this->activeEnemies.size(); i++)
 	{
@@ -202,6 +209,7 @@ void GameState::updatePlayerInput(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
 	{
 		this->player->move(0.f, 1.f, dt);
+		this->tts->addTextTag(DEFAULT_TAG);
 		//if(this->getKeytime())
 			//this->player->loseEXP(10);
 	}
@@ -227,34 +235,52 @@ void GameState::updateTileMap(const float& dt)
 
 	this->tileMap->update(this->player, dt);
 
-	for (auto* i : this->activeEnemies)
-	{
-		this->tileMap->updateWorldBoundsCollision(i, dt);
-		this->tileMap->updateTileCollision(i, dt);
-	}
+
 }
 
 void GameState::updatePlayer(const float& dt)
 {
 }
 
-void GameState::updateEnemies(const float& dt)
+void GameState::updateCombatAndEnemies(const float& dt)
 {
+	unsigned index = 0;
+	for (auto* enemy : this->activeEnemies)
+	{
+		enemy->update(dt, this->mousePosView);
 
-	//this->activeEnemies.push_back(new Rat(200.f, 100.f, this->textures["RAT1_SHEET"]));
+		this->tileMap->updateWorldBoundsCollision(enemy, dt);
+		this->tileMap->updateTileCollision(enemy, dt);
+
+		this->updateCombat(enemy,index, dt);
+
+		//Dangerous
+		if (enemy->isDead())
+		{
+			this->player->gainEXP(enemy->getGainExp());
+			this->activeEnemies.erase(this->activeEnemies.begin() + index);
+
+ 			--index;
+		}
+
+		++index;
+	}
 
 }
 
-void GameState::updateCombat(const float& dt)
+void GameState::updateCombat(Enemy* enemy, const int index,const float& dt)
 {
-	for (auto i : this->activeEnemies)
+	
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		if (this->player->getWeapon()->getAttackTimer()
+			&& enemy->getGlobalBounds().contains(this->mousePosView) && /*std::abs(this->player->getPosition().x - i->getPosition().x) <= this->player->getWeapon()->getRange()*/ enemy->getDistance(*this->player) < 250.f )
 		{
-			if (i->getGlobalBounds().contains(this->mousePosView) && std::abs(this->player->getPosition().x - i->getPosition().x) <= this->player->getWeapon()->getRange())
-			{
-				std::cout << "Hit" << "\n";
-			}
+			//Get to this!!
+			std::cout << "Hit" << "\n";
+			enemy->loseHP(this->player->getWeapon()->getDamageMin());
+			std::cout << enemy->getAttributeComp()->hp << "\n";
+				
 		}
 	}
 }
@@ -275,11 +301,10 @@ void GameState::update(const float& dt)
 		this->playerGUI->update(dt);
 
 		//Update all enemies
-		for (auto* i : this->activeEnemies)
-		{
-			i->update(dt, this->mousePosView);
-		}
-		this->updateCombat(dt);
+		this->updateCombatAndEnemies(dt);
+
+		//Update Systems
+		this->tts->update(dt);
 	}
 	else //Paused update
 	{
@@ -303,9 +328,9 @@ void GameState::render(sf::RenderTarget* target)
 		this->player->getCenter(),
 		false);
 
-	for (auto* i : this->activeEnemies)
+	for (auto* enemy : this->activeEnemies)
 	{
-		i->render(this->renderTexture, &this->core_shader, this->player->getCenter(), false);
+		enemy->render(this->renderTexture, &this->core_shader, this->player->getCenter(), false);
 	}
 
 	this->player->render(this->renderTexture, &this->core_shader , this->player->getCenter(), false);
@@ -314,6 +339,7 @@ void GameState::render(sf::RenderTarget* target)
 
 	this->tileMap->renderDeferred(this->renderTexture, &this->core_shader, this->player->getCenter());
 
+	this->tts->render(this->renderTexture);
 
 	//Render GUI
 	this->renderTexture.setView(this->renderTexture.getDefaultView());

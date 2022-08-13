@@ -59,7 +59,7 @@ AttributeComponent* Player::getAttributeComponent()
 	return this->attributeComponent;
 }
 
-const Weapon* Player::getWeapon() const
+Weapon* Player::getWeapon() const
 {
 	return this->bow;
 }
@@ -86,16 +86,6 @@ void Player::loseEXP(const int exp)
 void Player::gainEXP(const int exp)
 {
 	this->attributeComponent->gainExp(exp);
-}
-
-
-void Player::updateAttack() //Change it to attack once it is done
-{
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-	{
-		//this->attacking = true;
-
-	}
 }
 
 void Player::updateAnimation(const float& dt)
@@ -134,8 +124,6 @@ void Player::update(const float& dt, sf::Vector2f& mouse_pos_view)
 	//std::cout << this->attributeComponent->debugPrint() << "\n";
 
 	this->movementComponent->update(dt);
-
-	this->updateAttack();
 
 	this->updateAnimation(dt);
 

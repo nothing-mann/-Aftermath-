@@ -10,16 +10,22 @@ protected:
     sf::Texture weapon_texture;
     sf::Sprite weapon_sprite;
 
-    int damageMin;
-    int damageMax;
+    unsigned damageMin;
+    unsigned damageMax;
     unsigned range;
 
+    sf::Clock attackTimer;
+    sf::Int32 attackTimerMax;
 public:
     Weapons(unsigned value, std::string texture_file);
     virtual ~Weapons();
 
     //Accessors
+    const unsigned& getDamageMin() const;
+    const unsigned& getDamageMax() const;
+
     const unsigned& getRange() const;
+    const bool getAttackTimer();
 
     //Function
     virtual Item* clone() = 0;

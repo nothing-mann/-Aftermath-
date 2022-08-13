@@ -5,6 +5,7 @@
 #include "TileMap.h"
 #include "PlayerGUI.h"
 #include "Bow.h"
+#include "TextTagSystem.h"
 
 class GameState :
     public State
@@ -30,6 +31,10 @@ private:
 
     TileMap* tileMap;
 
+    //Systems
+    TextTagSystem* tts;
+
+
     //Functions
     void initDeferredRender();
     void initView();
@@ -42,6 +47,7 @@ private:
     void initPlayerGUI();
     void initEnemySystem();
     void initTileMap();
+    void initSystems();
 
 public:
 
@@ -56,8 +62,8 @@ public:
     void updatePauseMenuButtons();
     void updateTileMap(const float& dt);
     void updatePlayer(const float& dt);
-    void updateEnemies(const float& dt);
-    void updateCombat(const float& dt);
+    void updateCombatAndEnemies(const float& dt);
+    void updateCombat(Enemy* enemy, const int index, const float& dt);
     void update(const float& dt); // was a pure virtual function of State
     void render(sf::RenderTarget* target = nullptr); // was a pure virtual function of State
 };
