@@ -6,6 +6,7 @@
 #include "PlayerGUI.h"
 #include "Bow.h"
 #include "Enemy.h"
+#include "Rat.h"
 
 class GameState :
     public State
