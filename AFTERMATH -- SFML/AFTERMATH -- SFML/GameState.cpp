@@ -245,6 +245,20 @@ void GameState::updateEnemies(const float& dt)
 
 }
 
+void GameState::updateCombat(const float& dt)
+{
+	for (auto i : this->activeEnemies)
+	{
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+		{
+			if (i->getGlobalBounds().contains(this->mousePosView) && std::abs(this->player->getPosition().x - i->getPosition().x) <= this->player->getWeapon()->getRange())
+			{
+				std::cout << "Hit" << "\n";
+			}
+		}
+	}
+}
+
 void GameState::update(const float& dt)
 {
 	this->updateMousePositions(&this->view);
@@ -260,11 +274,12 @@ void GameState::update(const float& dt)
 
 		this->playerGUI->update(dt);
 
+		//Update all enemies
 		for (auto* i : this->activeEnemies)
 		{
 			i->update(dt, this->mousePosView);
 		}
-
+		this->updateCombat(dt);
 	}
 	else //Paused update
 	{

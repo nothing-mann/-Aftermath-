@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "Bow.h"
 
-Bow::Bow()
+Bow::Bow(unsigned value, std::string texture_file)
+	:Weapon(value, texture_file)
 {
 	//Visual Weapon
-	this->weapon_texture.loadFromFile("Resources/Images/Sprites/Player/bow.png");
-	this->weapon_sprite.setTexture(this->weapon_texture);
+
 
 	/*this->weapon_sprite.setOrigin
 	(
@@ -16,6 +16,11 @@ Bow::Bow()
 
 Bow::~Bow()
 {
+}
+
+Bow* Bow::clone()
+{
+	return new Bow(*this);
 }
 
 void Bow::update(const sf::Vector2f& mouse_pos_view, const sf::Vector2f center)

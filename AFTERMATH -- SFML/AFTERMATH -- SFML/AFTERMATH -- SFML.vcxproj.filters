@@ -31,12 +31,6 @@
     <Filter Include="Items">
       <UniqueIdentifier>{99786efb-0cf2-472a-b7aa-b7e736083fa1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Items\Weapon">
-      <UniqueIdentifier>{02ac9efc-3b8b-4272-8391-5928d2720f7f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Items\RangedWeapon">
-      <UniqueIdentifier>{2952c1c5-d1ed-4990-a5e6-798cfdb308d9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Map\Tile">
       <UniqueIdentifier>{947dc900-118e-41e8-877b-8ff4abff88f8}</UniqueIdentifier>
     </Filter>
@@ -45,6 +39,15 @@
     </Filter>
     <Filter Include="Entities\Enemies">
       <UniqueIdentifier>{139121dc-7b90-40b9-853f-ef0972a4cc9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items\W">
+      <UniqueIdentifier>{91a17600-8949-459c-8cae-8117047d85f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items\W\RangedWeapon">
+      <UniqueIdentifier>{2952c1c5-d1ed-4990-a5e6-798cfdb308d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Items\W\Weapon">
+      <UniqueIdentifier>{02ac9efc-3b8b-4272-8391-5928d2720f7f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,19 +115,19 @@
       <Filter>Items</Filter>
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
-      <Filter>Items\Weapon</Filter>
+      <Filter>Items\W\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Bow.cpp">
-      <Filter>Items\Weapon</Filter>
+      <Filter>Items\W\Weapon</Filter>
     </ClCompile>
     <ClCompile Include="SkillComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="RangedWeapon.cpp">
-      <Filter>Items\RangedWeapon</Filter>
+      <Filter>Items\W\RangedWeapon</Filter>
     </ClCompile>
     <ClCompile Include="Rbow.cpp">
-      <Filter>Items\RangedWeapon</Filter>
+      <Filter>Items\W\RangedWeapon</Filter>
     </ClCompile>
     <ClCompile Include="EnemySpawnerTile.cpp">
       <Filter>Map\Tile</Filter>
@@ -149,6 +152,12 @@
     </ClCompile>
     <ClCompile Include="EnemySystem.cpp">
       <Filter>Entities\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapons.cpp">
+      <Filter>Items\W</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -216,19 +225,19 @@
       <Filter>Items</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h">
-      <Filter>Items\Weapon</Filter>
+      <Filter>Items\W\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Bow.h">
-      <Filter>Items\Weapon</Filter>
+      <Filter>Items\W\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="SkillComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="RangedWeapon.h">
-      <Filter>Items\RangedWeapon</Filter>
+      <Filter>Items\W\RangedWeapon</Filter>
     </ClInclude>
     <ClInclude Include="Rbow.h">
-      <Filter>Items\RangedWeapon</Filter>
+      <Filter>Items\W\RangedWeapon</Filter>
     </ClInclude>
     <ClInclude Include="EnemySpawnerTile.h">
       <Filter>Map\Tile</Filter>
@@ -259,6 +268,15 @@
     </ClInclude>
     <ClInclude Include="EnemySystem.h">
       <Filter>Entities\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Items.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapons.h">
+      <Filter>Items\W</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

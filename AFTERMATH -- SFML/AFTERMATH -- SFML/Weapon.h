@@ -1,21 +1,18 @@
 #pragma once
-#include "Item.h"
+#include "Weapons.h"
 class Weapon :
-    public Item
+    public Weapons
 {
 private:
 
 protected:
-    sf::Texture weapon_texture;
-    sf::Sprite weapon_sprite;
-
-    int damageMin;
-    int damageMax;
+ 
 
 public:
-    Weapon();
+    Weapon(unsigned value, std::string texture_file);
     virtual ~Weapon();
 
+    virtual Weapon* clone() = 0;
 
     virtual void update(const sf::Vector2f& mouse_pos_view, const sf::Vector2f center) = 0;
     virtual void render(sf::RenderTarget& target, sf::Shader* shader) = 0;

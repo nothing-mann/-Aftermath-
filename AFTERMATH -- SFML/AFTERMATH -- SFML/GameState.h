@@ -57,6 +57,7 @@ public:
     void updateTileMap(const float& dt);
     void updatePlayer(const float& dt);
     void updateEnemies(const float& dt);
+    void updateCombat(const float& dt);
     void update(const float& dt); // was a pure virtual function of State
     void render(sf::RenderTarget* target = nullptr); // was a pure virtual function of State
 };

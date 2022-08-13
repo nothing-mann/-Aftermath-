@@ -4,6 +4,9 @@
 void Player::initVariables()
 {
 	this->attacking = false;
+	this->bow = new Bow(20, "Resources/Images/Sprites/Player/bow.png");
+	
+
 }
 
 void Player::initComponents()
@@ -20,10 +23,15 @@ void Player::initAnimations()
 	this->animationComponent->addAnimation("ATTACK", 5.f, 0, 2, 1, 2, 64, 64);
 
 }
+void Player::initInventory()
+{
+	this->inventory = new Inventory(50);
+}
 //Constructors Destructors
 Player::Player(float x, float y, sf::Texture& texture_sheet)
 {
 	this->initVariables();
+
 
 	this->createHitboxComponent(this->sprite, 10.f, 5.f, 44.f, 54.f);
 	this->createMovementComponent(200.f, 1600.f, 1000.f);
@@ -35,12 +43,13 @@ Player::Player(float x, float y, sf::Texture& texture_sheet)
 
 	this->initAnimations();
 
-	
+	this->initInventory();	
 }
 
 Player::~Player()
 {
-
+	delete this->inventory;
+	delete this->bow;
 }
 
 
@@ -48,6 +57,11 @@ Player::~Player()
 AttributeComponent* Player::getAttributeComponent()
 {
 	return this->attributeComponent;
+}
+
+const Weapon* Player::getWeapon() const
+{
+	return this->bow;
 }
 
 
@@ -127,7 +141,7 @@ void Player::update(const float& dt, sf::Vector2f& mouse_pos_view)
 
 	this->hitboxComponent->update();
 
-	this->bow.update(mouse_pos_view, this->getCenter());
+	this->bow->update(mouse_pos_view, this->getCenter());
 }
 
 void Player::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f light_position, const bool show_hitbox)
@@ -140,12 +154,12 @@ void Player::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vect
 
 		shader->setUniform("hasTexture", true);
 		shader->setUniform("lightPos", light_position);
-		this->bow.render(target, shader);
+		this->bow->render(target, shader);
 	}
 	else
 	{
 		target.draw(this->sprite);
-		this->bow.render(target);
+		this->bow->render(target);
 	}
 	
 

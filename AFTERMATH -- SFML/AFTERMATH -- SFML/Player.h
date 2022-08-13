@@ -1,26 +1,31 @@
 #pragma once
 #include "Entity.h"
-#include "Bow.h"
+#include "Items.h"
+#include "Inventory.h"
 
 class Player :
     public Entity
 {
 private:
     //Variables
+    Inventory* inventory;
+
     bool attacking; //Convert the jumping into attacking once it is done
-    Bow bow;
+    Bow* bow;
 
 
     //Initializer functions
     void initVariables();
     void initComponents();
     void initAnimations();
+    void initInventory();
 public:
     Player(float x, float y, sf::Texture& texture_sheet);
     virtual ~Player();
     
     //Accessors
     AttributeComponent* getAttributeComponent();
+    const Weapon* getWeapon() const;
 
     //Functions
     void loseHP(const int hp);
