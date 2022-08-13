@@ -1,6 +1,6 @@
 #pragma once
 #include "Entity.h"
-#include "EnemySpawner.h"
+#include "EnemySpawnerTile.h"
 
 class Enemy :
     public Entity

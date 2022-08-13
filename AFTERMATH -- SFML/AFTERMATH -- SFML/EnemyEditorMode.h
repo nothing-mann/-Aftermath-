@@ -1,6 +1,6 @@
 #pragma once
 #include "EditorMode.h"
-#include "EnemySpawner.h"
+#include "EnemySpawnerTile.h"
 class EnemyEditorMode :
     public EditorMode
 {

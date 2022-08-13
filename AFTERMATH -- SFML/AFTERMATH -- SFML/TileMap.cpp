@@ -141,8 +141,19 @@ void TileMap::addTile(const int x, const int y, const int z, const sf::IntRect& 
 	{
 
 		//Ok to add tile
-		this->map[x][y][z].push_back(new Tile(x , y , this->gridSizeF, this->tileTextureSheet, tex_rect, collision, type));
-		std::cout << "DEBUG: ADDED TILE!" << "\n";
+		this->map[x][y][z].push_back( new RegularTile(type, x , y , this->gridSizeF, this->tileTextureSheet, tex_rect, collision));
+
+		//std::cout << "DEBUG: ADDED TILE!" << "\n";
+	}
+}
+
+void TileMap::addTile(const int x, const int y, const int z, const sf::IntRect& tex_rect,
+	const int enemy_type, const int enemy_amount, const int enemy_tts, const int enemy_md)
+{
+	if (x < this->maxSizeWorldGrid.x && x >= 0 && y < this->maxSizeWorldGrid.y && y >= 0 && z < this->layers && z >= 0)
+	{
+
+			this->map[x][y][z].push_back(new EnemySpawnerTile(x, y, this->gridSizeF, this->tileTextureSheet, tex_rect, enemy_type, enemy_amount, enemy_tts, enemy_md));
 	}
 }
 
@@ -186,7 +197,7 @@ void TileMap::saveToFile(const std::string file_name)
 	texturefile
 
 	All tiles:
-	gridPos x y layer, Texture rect x y, collision, type
+	 type, gridPos x y layer, Texture rect x y, collision, tile_Specific
 	*/
 	std::ofstream out_file;
 	out_file.open(file_name);
@@ -274,9 +285,34 @@ void TileMap::loadFromFile(const std::string file_name)
 		this->tileTextureSheet.loadFromFile(texture_file);
 
 		//Load all tiles
-		while (in_file >> x >> y >> z >> trX >> trY >> collision >> type)
+		while (in_file >> x >> y >> z >> type)
 		{
-			this->map[x][y][z].push_back(new Tile(x, y, this->gridSizeF, this->tileTextureSheet, sf::IntRect(trX, trY, this->gridSizeI, this->gridSizeI), collision, type));
+			if (type == TileTypes::ENEMYSPAWNER)
+			{
+				//amount, time to spawn, max distance
+				int enemy_type;
+				int enemy_amount;
+				int enemy_tts;
+				int enemy_md;
+				
+				in_file >> trX >> trY >> enemy_type >> enemy_amount >> enemy_tts >> enemy_md;
+				
+				this->map[x][y][z].push_back(
+					new EnemySpawnerTile(x, y,
+					this->gridSizeF,
+					this->tileTextureSheet,
+					sf::IntRect(trX, trY, this->gridSizeI, this->gridSizeI),
+					enemy_type,
+					enemy_amount,
+					enemy_tts,
+					enemy_md));
+			}
+			else
+			{
+				in_file >> trX >> trY >> collision;
+				
+				this->map[x][y][z].push_back(new RegularTile(type, x, y, this->gridSizeF, this->tileTextureSheet, sf::IntRect(trX, trY, this->gridSizeI, this->gridSizeI), collision));
+			}
 		}
 	}
 	else
