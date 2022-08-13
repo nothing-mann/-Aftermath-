@@ -4,8 +4,9 @@
 #include "PauseMenu.h"
 #include "TileMap.h"
 #include "DefaultEditorMode.h"
+#include "EnemyEditorMode.h"
 
-enum EditorModes {DEFAULT_MODE = 0, ENEMY};
+enum EditorModes {DEFAULT_EDITOR_MODE = 0, ENEMY_EDITOR_MODE};
 
 
 class EditorState :
@@ -26,6 +27,7 @@ private:
     TileMap* tileMap;
 
     std::vector<EditorMode*> modes;
+    unsigned activeMode;
 
     //Functions
     void initVariables();

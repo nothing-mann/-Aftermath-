@@ -146,7 +146,7 @@ void TileMap::addTile(const int x, const int y, const int z, const sf::IntRect& 
 	}
 }
 
-void TileMap::removeTile(const int x, const int y, const int z)
+void TileMap::removeTile(const int x, const int y, const int z, const int type)
 {
 	//take three indices from the mouse position in the grid and remove a tile to that position if the internal tilemap array allows it
 	if (x < this->maxSizeWorldGrid.x && x >= 0 && y < this->maxSizeWorldGrid.y && y >= 0 && z < this->layers && z >= 0)
@@ -154,9 +154,22 @@ void TileMap::removeTile(const int x, const int y, const int z)
 		if (!this->map[x][y][z].empty()) //Adds something if it is actually null
 		{
 			//Ok to remove tile
-			delete this->map[x][y][z][this->map[x][y][z].size() - 1];
-			this->map[x][y][z].pop_back();   //Very IMPORTANT to Set this to NULL POINTER
-			std::cout << "Debug: Removed a tile" << "\n";
+			if (type >= 0)
+			{
+				if (this->map[x][y][z].back()->getType() == type)
+				{
+					delete this->map[x][y][z][this->map[x][y][z].size() - 1];
+					this->map[x][y][z].pop_back();   //Very IMPORTANT to Set this to NULL POINTER
+					//std::cout << "Debug: Removed a tile" << "\n";
+				}
+			}
+			else
+			{
+				delete this->map[x][y][z][this->map[x][y][z].size() - 1];
+				this->map[x][y][z].pop_back();   //Very IMPORTANT to Set this to NULL POINTER
+				//std::cout << "Debug: Removed a tile" << "\n";
+			}
+			
 		}
 
 	}
@@ -271,6 +284,11 @@ void TileMap::loadFromFile(const std::string file_name)
 		std::cout << "Error::tilemap::could not load from file:: filename:" << file_name << "\n";
 	}
 	in_file.close();
+}
+
+const bool TileMap::checkType(const int x, const int y, const int z, const int type) const
+{
+	return this->map[x][y][this->layer].back()->getType() == type;
 }
 
 void TileMap::update(Entity* entity, const float& dt)
@@ -456,6 +474,11 @@ void TileMap::render(
 						this->collisionBox.setPosition(this->map[x][y][this->layer][k]->getPosition());
 						target.draw(this->collisionBox);
 					}
+				}
+				if (this->map[x][y][this->layer][k]->getType() == TileTypes::ENEMYSPAWNER)
+				{
+					this->collisionBox.setPosition(this->map[x][y][this->layer][k]->getPosition());
+					target.draw(this->collisionBox);
 				}
 			}
 				

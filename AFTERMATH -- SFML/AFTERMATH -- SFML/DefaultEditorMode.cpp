@@ -133,6 +133,7 @@ void DefaultEditorMode::updateGui(const float& dt)
 	}
 
 	this->cursorText.setPosition(this->editorStateData->mousePosView->x + 100.f, this->editorStateData->mousePosView->y - 50.f);
+
 	std::stringstream ss;
 	ss << this->editorStateData->mousePosView->x << " " << this->editorStateData->mousePosView->y << "\n" << this->editorStateData->mousePosGrid->x << " " << this->editorStateData->mousePosGrid->y << "\n" << this->textureRect.left << " " << this->textureRect.top << "\n" << "Colliaion: " << this->collision << "\n" << "Type: " << this->type << "\n" << "Tiles: " << this->tileMap->getLayerSize(this->editorStateData->mousePosGrid->x, this->editorStateData->mousePosGrid->y, this->layer) << "\n" << "Tile lock: " << this->tileAddLock;
 	this->cursorText.setString(ss.str());
@@ -148,7 +149,7 @@ void DefaultEditorMode::update(const float& dt)
 
 void DefaultEditorMode::renderGui(sf::RenderTarget& target)
 {
-	if (this->textureSelector->getActive())
+	if (!this->textureSelector->getActive())
 	{
 		target.setView(*this->editorStateData->view);
 
