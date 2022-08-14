@@ -1,8 +1,8 @@
 #include "stdafx.h"
 #include "Bow.h"
 
-Bow::Bow(unsigned value, std::string texture_file)
-	:Weapon(value, texture_file)
+Bow::Bow(unsigned level, unsigned damageMin, unsigned damageMax, unsigned range, unsigned value, std::string texture_file)
+	:Weapon(level, damageMin, damageMax, range, value, texture_file)
 {
 	//Visual Weapon
 

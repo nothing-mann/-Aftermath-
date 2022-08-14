@@ -3,8 +3,8 @@
 
 
 
-Rbow::Rbow(unsigned value, std::string texture_file)
-	:RangedWeapon(value, texture_file)
+Rbow::Rbow(unsigned level, unsigned value, std::string texture_file)
+	:RangedWeapon(level, value, texture_file)
 {
 }
 

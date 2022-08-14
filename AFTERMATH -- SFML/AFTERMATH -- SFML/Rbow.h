@@ -4,7 +4,7 @@ class Rbow :
     public RangedWeapon
 {
 public:
-    Rbow(unsigned value, std::string texture_file);
+    Rbow(unsigned level, unsigned value, std::string texture_file);
     virtual ~Rbow();
 
     virtual Rbow* clone();

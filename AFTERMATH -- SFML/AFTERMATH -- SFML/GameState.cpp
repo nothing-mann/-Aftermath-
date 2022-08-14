@@ -209,7 +209,6 @@ void GameState::updatePlayerInput(const float& dt)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keybinds.at("MOVE_DOWN"))))
 	{
 		this->player->move(0.f, 1.f, dt);
-		this->tts->addTextTag(DEFAULT_TAG);
 		//if(this->getKeytime())
 			//this->player->loseEXP(10);
 	}
@@ -258,6 +257,7 @@ void GameState::updateCombatAndEnemies(const float& dt)
 		if (enemy->isDead())
 		{
 			this->player->gainEXP(enemy->getGainExp());
+			this->tts->addTextTag(EXPERIENCE_TAG, this->player->getCenter().x, this->player->getCenter().y, static_cast<int>(enemy->getGainExp()));
 			this->activeEnemies.erase(this->activeEnemies.begin() + index);
 
  			--index;
@@ -274,12 +274,13 @@ void GameState::updateCombat(Enemy* enemy, const int index,const float& dt)
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		if (this->player->getWeapon()->getAttackTimer()
-			&& enemy->getGlobalBounds().contains(this->mousePosView) && /*std::abs(this->player->getPosition().x - i->getPosition().x) <= this->player->getWeapon()->getRange()*/ enemy->getDistance(*this->player) < 250.f )
+			&& enemy->getGlobalBounds().contains(this->mousePosView) && /*std::abs(this->player->getPosition().x - i->getPosition().x) <= this->player->getWeapon()->getRange()*/ enemy->getDistance(*this->player) < this->player->getWeapon() ->getRange() )          //This lets us do the shooting basically. here we get the distance between the player and the enemy and when within the range kills															the enemy if hit on the area where the enemy is (here, the range is 500.f)
 		{
 			//Get to this!!
 			std::cout << "Hit" << "\n";
-			enemy->loseHP(this->player->getWeapon()->getDamageMin());
-			std::cout << enemy->getAttributeComp()->hp << "\n";
+			int dmg = static_cast<int>(this->player->getWeapon()->getDamage());
+			enemy->loseHP(dmg);
+			this->tts->addTextTag(NEGATIVE_TAG, enemy->getPosition().x, enemy->getPosition().y, dmg);
 				
 		}
 	}

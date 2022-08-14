@@ -4,9 +4,8 @@
 void Player::initVariables()
 {
 	this->attacking = false;
-	this->bow = new Bow(20, "Resources/Images/Sprites/Player/bow.png");
-	
-
+	this->bow = new Bow(1, 1, 3, 500, 20, "Resources/Images/Sprites/Player/bow.png"); //Weapon RANGE here.....................
+	//this->bow->generate(1, 3);
 }
 
 void Player::initComponents()
