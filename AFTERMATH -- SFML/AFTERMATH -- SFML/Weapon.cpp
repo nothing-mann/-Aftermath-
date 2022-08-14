@@ -17,7 +17,7 @@ void Weapon::generate(const unsigned levelMin, const unsigned levelMax)
 	this->damageMin = this->level * (rand() % 2 + 1);
 	this->damageMax = this->level * (rand() % 2 + 1) + this->damageMin;
 
-	this->range = this->level + rand() % 10 + 400;
+	this->range = this->level + rand() % 10 + 400; //Here the range for the bow is set.....................................................
 
 	this->value = this->level + this->damageMin + this->damageMax + this->range + (rand() % level * 10);
 

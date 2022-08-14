@@ -9,7 +9,7 @@ void Weapons::initVariables()
 
 	//Timer for the clicks to work..............................
 	this->attackTimer.restart();
-	this->attackTimerMax = 500;
+	this->attackTimerMax = 300;
 }
 
 

@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy.h"
+#include "AIFollow.h"
 class Rat :
     public Enemy
 {
@@ -7,11 +8,14 @@ private:
     void initVariables();
     void initAnimations();
     void initGUI();
+    void initAI();
 
     sf::RectangleShape hpBar;
 
+    AIFollow* follow;
+
 public:
-    Rat(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& enemy_spawner_tile);
+    Rat(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& enemy_spawner_tile, Entity& player);
     virtual ~Rat();
 
     //Functions

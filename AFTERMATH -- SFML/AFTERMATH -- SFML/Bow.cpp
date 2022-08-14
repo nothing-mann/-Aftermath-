@@ -37,7 +37,8 @@ void Bow::update(const sf::Vector2f& mouse_pos_view, const sf::Vector2f center)
 
 	if (this->attackTimer.getElapsedTime().asMilliseconds() < this->attackTimerMax)
 	{
-		this->weapon_sprite.move(500.f, 0.f);
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+			this->weapon_sprite.move(mouse_pos_view.x - this->weapon_sprite.getPosition().x, mouse_pos_view.y - this->weapon_sprite.getPosition().y);
 	}
 }
 

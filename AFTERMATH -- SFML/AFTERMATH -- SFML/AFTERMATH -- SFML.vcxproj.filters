@@ -52,6 +52,12 @@
     <Filter Include="Systems">
       <UniqueIdentifier>{a47865af-a5aa-4bb1-b5ba-347456690f88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{0b34282c-f167-488d-a67d-dfaac7a410f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Options">
+      <UniqueIdentifier>{abc2667d-4cb3-4218-9066-be1f1f3d8bc4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -164,6 +170,9 @@
     </ClCompile>
     <ClCompile Include="TextTagSystem.cpp">
       <Filter>Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="AIFollow.cpp">
+      <Filter>AI\Options</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -286,6 +295,9 @@
     </ClInclude>
     <ClInclude Include="TextTagSystem.h">
       <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="AIFollow.h">
+      <Filter>AI\Options</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
