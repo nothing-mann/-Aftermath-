@@ -3,12 +3,13 @@
 
 EnemySpawnerTile::EnemySpawnerTile(int grid_x, int grid_y, float gridSizef,
 	sf::Texture& texture, const sf::IntRect& tex_rect,
-	 int enemy_type, int enemy_amount, int enemy_time_to_spawn, float enemy_max_distance)
+	 int enemy_type, int enemy_amount, sf::Int32 enemy_time_to_spawn, float enemy_max_distance)
 	:Tile(TileTypes::ENEMYSPAWNER, grid_x, grid_y, gridSizef, texture, tex_rect, false)
 {
 
 	this->enemyType = enemy_type;
 	this->enemyAmount = enemy_amount;
+	this->enemySpawnTimer.restart();
 	this->enemyTimeToSpawn = enemy_time_to_spawn;
 	this->enemyMaxDistance = enemy_max_distance;
 
@@ -48,10 +49,23 @@ const bool& EnemySpawnerTile::getSpawned() const
 void EnemySpawnerTile::setSpawned(const bool spawned)
 {
 	this->spawned = spawned;
+	this->enemySpawnTimer.restart();
+}
+
+const bool EnemySpawnerTile::canSpawn() const
+{
+	if (this->enemySpawnTimer.getElapsedTime().asMilliseconds() >= this->enemyTimeToSpawn)
+	{
+		return true;
+	}
+	return false;
 }
 
 void EnemySpawnerTile::update()
 {
+	//if (this->canSpawn())
+		//this->spawned = false;
+
 }
 
 void EnemySpawnerTile::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f player_position)

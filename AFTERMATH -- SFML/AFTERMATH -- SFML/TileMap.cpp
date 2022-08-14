@@ -495,8 +495,11 @@ void TileMap::updateTiles(Entity* entity, const float& dt, EnemySystem& enemySys
 		{
 			for (int k = 0; k < static_cast<int>(this->map[x][y][this->layer].size()); k++)
 			{
+				//Update the tile
 				this->map[x][y][this->layer][k]->update();
 
+
+				//Update tile types (specific)
 				if (this->map[x][y][this->layer][k]->getType() == TileTypes::ENEMYSPAWNER)
 				{
 					EnemySpawnerTile* es = dynamic_cast<EnemySpawnerTile*>(this->map[x][y][this->layer][k]);
