@@ -7,18 +7,19 @@ class Enemy :
 {
 private:
     //Variables
-    //EnemySpawnerTile& enemySpawnerTile;
+    EnemySpawnerTile& enemySpawnerTile;
     unsigned gainExp;
 
     //Initializer functions
     virtual void initVariables() = 0;
     virtual void initAnimations() = 0;
 public:
-    Enemy();
+    Enemy(EnemySpawnerTile& enemy_spawner_tile);
     virtual ~Enemy();
 
     //Accessors
     const unsigned& getGainExp() const;
+    EnemySpawnerTile& getEnemySpawnerTile();
 
     //Functions
     virtual void generateAttributes(const unsigned level);

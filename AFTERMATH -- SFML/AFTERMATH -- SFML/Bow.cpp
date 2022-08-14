@@ -33,7 +33,12 @@ void Bow::update(const sf::Vector2f& mouse_pos_view, const sf::Vector2f center)
 	const float PI = 3.14159265f;
 	float deg = atan2(dY, dX) * 180 / PI;
 
-	this->weapon_sprite.setRotation(deg);
+	this->weapon_sprite.setRotation(deg - 30);
+
+	if (this->attackTimer.getElapsedTime().asMilliseconds() < this->attackTimerMax)
+	{
+		this->weapon_sprite.move(500.f, 0.f);
+	}
 }
 
 void Bow::render(sf::RenderTarget& target, sf::Shader* shader)

@@ -26,8 +26,8 @@ void Rat::initGUI()
 }
 
 //Constructor/ destructor
-Rat::Rat(float x, float y, sf::Texture& texture_sheet)
-	:Enemy()
+Rat::Rat(float x, float y, sf::Texture& texture_sheet, EnemySpawnerTile& enemy_spawner_tile)
+	:Enemy(enemy_spawner_tile)
 {
 	this->initVariables();
 	this->initGUI();

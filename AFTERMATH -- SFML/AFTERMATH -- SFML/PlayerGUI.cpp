@@ -81,6 +81,7 @@ void PlayerGUI::initHPBar()
 	//this->hpBarText.setPosition(this->hpBarInner.getPosition().x + gui::p2pX(0.53f, this->vm), this->hpBarInner.getPosition().y + gui::p2pY(0.5f, this->vm));
 }
 
+
 PlayerGUI::PlayerGUI(Player* player, sf::VideoMode& vm)
 	:vm(vm)
 {
